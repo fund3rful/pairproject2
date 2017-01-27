@@ -7,4 +7,4 @@ nbactions.xml
 nbproject/
 build.xml
 manifest.mf
-text/
+test/
