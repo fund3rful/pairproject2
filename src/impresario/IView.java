@@ -15,19 +15,23 @@
 //	Revision History: See end of file.
 //
 //*************************************************************
+
 // JavaDoc information
 /** @author		$Author: tomb $ */
 /** @version	$Revision: 1.1 $ */
+
 // specify the package
 package impresario;
 
 // system imports
-// local includes
-//==============================================================
-public interface IView {
-    // allows a Model to update our visual state
 
-    public void updateState(String key, Object value);
+// local includes
+
+//==============================================================
+public interface IView
+{
+	// allows a Model to update our visual state
+	public void updateState(String key, Object value);
 
 }
 

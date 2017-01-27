@@ -15,8 +15,11 @@
 //	Revision History: See end of file.
 //
 //*************************************************************
+
 /** @author		$Author: pwri0503 $ */
 /** @version	$Revision: 1.1.1.2 $ */
+
+
 // specify the package
 package database;
 
@@ -24,90 +27,109 @@ package database;
 import java.util.Enumeration;
 import java.util.Properties;
 
+
 // project imports
+
+
 // Beginning of DatabaseManipulator class
 //---------------------------------------------------------------------------------------------------------
-public class SQLSelectStatement extends SQLStatement {
-
+public class SQLSelectStatement extends SQLStatement
+{  
     /**
      *
-     * This handles only equality in the WHERE clause. This also expects that
-     * for numeric types in the WHERE clause, a separate Properties object
-     * containing the column name and numeric type indicator will be provided.
-     * For text types, no entry in this Properties object is necessary.
+     * This handles only equality in the WHERE clause. This also 
+     * expects that for numeric types in the WHERE clause, a separate
+     * Properties object containing the column name and numeric type
+     * indicator will be provided. For text types, no entry in this
+     * Properties object is necessary.
      */
     //------------------------------------------------------------
     public SQLSelectStatement(Properties schema,
-            Properties whereValues) {
-        // Begin construction of the actual SQL statement
-        theSQLStatement = "SELECT ";
+    						  Properties whereValues)
+    {
+		// Begin construction of the actual SQL statement
+		theSQLStatement = "SELECT ";
+		
+		// add the fields from the schema, skip the tablename
+		Enumeration fields = schema.propertyNames();
+		while (fields.hasMoreElements() == true)
+		{
+			String field = (String)fields.nextElement();
+			if(field.equals("TableName") != true)
+			{
+				// skip the leading comma if we're at the beginning
+				if(theSQLStatement.length() > 7)
+					theSQLStatement += ", " + field;
+				else
+					theSQLStatement += field;
+			}
+		}
+		
+		// add the tablename
+		theSQLStatement += " FROM " + schema.getProperty("TableName");
+		
+		// Construct the WHERE part of the SQL statement
+		String theWhereString = "";
+	
+		// Now, traverse the WHERE clause Properties object
+		if (whereValues != null)
+		{
+			Enumeration theWhereFields = whereValues.propertyNames();
+			while (theWhereFields.hasMoreElements() == true)
+			{
+				
+				String theFieldName = (String)theWhereFields.nextElement();
+				String theFieldValue = insertEscapes(whereValues.getProperty(theFieldName));
+				
+				if (theFieldValue.length() > 0)		// Exclude empty strings
+				{
+				
+					String theConjunctionClause = "";
+				
+					if (theWhereString.equals(""))
+					{
+		  				theConjunctionClause += " WHERE ";
+					}
+					else
+					{
+						theConjunctionClause += " AND ";
+					}
+	
+					if (theFieldValue.equals("NULL"))
+					{
+						theWhereString += theConjunctionClause + theFieldName + " IS NULL";
+					}
+					else
+					{
+						// extract the type from the schema
+						String actualType = schema.getProperty(theFieldName);
+	
+						// if the type is numeric, do NOT include quotes.
+						if ((actualType != null) && (actualType.equals("numeric") == true))
+						{
+							theWhereString += theConjunctionClause + theFieldName + " = " + theFieldValue;
+						}
+						else
+						{
+							// must the a text type, include the quotes.
+							theWhereString += theConjunctionClause + theFieldName + " = '" + theFieldValue + "'";
+						}
+					}	
 
-        // add the fields from the schema, skip the tablename
-        Enumeration fields = schema.propertyNames();
-        while (fields.hasMoreElements() == true) {
-            String field = (String) fields.nextElement();
-            if (field.equals("TableName") != true) {
-                // skip the leading comma if we're at the beginning
-                if (theSQLStatement.length() > 7) {
-                    theSQLStatement += ", " + field;
-                } else {
-                    theSQLStatement += field;
-                }
-            }
-        }
-
-        // add the tablename
-        theSQLStatement += " FROM " + schema.getProperty("TableName");
-
-        // Construct the WHERE part of the SQL statement
-        String theWhereString = "";
-
-        // Now, traverse the WHERE clause Properties object
-        if (whereValues != null) {
-            Enumeration theWhereFields = whereValues.propertyNames();
-            while (theWhereFields.hasMoreElements() == true) {
-
-                String theFieldName = (String) theWhereFields.nextElement();
-                String theFieldValue = insertEscapes(whereValues.getProperty(theFieldName));
-
-                if (theFieldValue.length() > 0) // Exclude empty strings
-                {
-
-                    String theConjunctionClause = "";
-
-                    if (theWhereString.equals("")) {
-                        theConjunctionClause += " WHERE ";
-                    } else {
-                        theConjunctionClause += " AND ";
-                    }
-
-                    if (theFieldValue.equals("NULL")) {
-                        theWhereString += theConjunctionClause + theFieldName + " IS NULL";
-                    } else {
-                        // extract the type from the schema
-                        String actualType = schema.getProperty(theFieldName);
-
-                        // if the type is numeric, do NOT include quotes.
-                        if ((actualType != null) && (actualType.equals("numeric") == true)) {
-                            theWhereString += theConjunctionClause + theFieldName + " = " + theFieldValue;
-                        } else {
-                            // must the a text type, include the quotes.
-                            theWhereString += theConjunctionClause + theFieldName + " = '" + theFieldValue + "'";
-                        }
-                    }
-
-                }
-            }
-        }
-
-        theSQLStatement += theWhereString;
-
-        // DEBUG: System.out.println(theSQLStatement);
-        theSQLStatement += ";";
-
-    }
+				}
+			}
+		}
+		  
+		theSQLStatement += theWhereString;
+		
+		// DEBUG: System.out.println(theSQLStatement);
+		
+		theSQLStatement += ";";
+				
+	}
 
 }
+
 
 //---------------------------------------------------------------
 //	Revision History:

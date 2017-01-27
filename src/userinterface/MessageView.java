@@ -33,44 +33,54 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 // project imports
+
 //==============================================================
-public class MessageView extends Text {
+public class MessageView extends Text
+{
 
-    // Class constructor
-    //----------------------------------------------------------
-    public MessageView(String initialMessage) {
-        super(initialMessage);
-        setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
-        setFill(Color.BLUE);
-        setTextAlignment(TextAlignment.LEFT);
-    }
+	// Class constructor
+	//----------------------------------------------------------
+	public MessageView(String initialMessage)
+	{
+		super(initialMessage);
+		setFont(Font.font("Helvetica", FontWeight.BOLD, 16));
+		setFill(Color.BLUE);
+		setTextAlignment(TextAlignment.LEFT);
+	}
 
-    /**
-     * Display ordinary message
-     */
-    //----------------------------------------------------------
-    public void displayMessage(String message) {
-        // display the passed text in red
-        setFill(Color.BLUE);
-        setText(message);
-    }
+	/**
+	 * Display ordinary message
+	 */
+	//----------------------------------------------------------
+	public void displayMessage(String message)
+	{
+		// display the passed text in red
+		setFill(Color.BLUE);
+		setText(message);
+	}
 
-    /**
-     * Display error message
-     */
-    //----------------------------------------------------------
-    public void displayErrorMessage(String message) {
-        // display the passed text in red
-        setFill(Color.RED);
-        setText(message);
-    }
+	/**
+	 * Display error message
+	 */
+	//----------------------------------------------------------
+	public void displayErrorMessage(String message)
+	{
+		// display the passed text in red
+		setFill(Color.RED);
+		setText(message);
+	}
 
-    /**
-     * Clear error message
-     */
-    //----------------------------------------------------------
-    public void clearErrorMessage() {
-        setText("                           ");
-    }
+	/**
+	 * Clear error message
+	 */
+	//----------------------------------------------------------
+	public void clearErrorMessage()
+	{
+		setText("                           ");
+	}
+
 
 }
+
+
+

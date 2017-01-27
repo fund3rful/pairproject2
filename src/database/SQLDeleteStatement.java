@@ -15,8 +15,11 @@
 //	Revision History: See end of file.
 //
 //*************************************************************
+
 /** @author		$Author: pwri0503 $ */
 /** @version	$Revision: 1.1.1.2 $ */
+
+
 // specify the package
 package database;
 
@@ -24,70 +27,88 @@ package database;
 import java.util.Enumeration;
 import java.util.Properties;
 
+
 // project imports
+
+
 // Beginning of DatabaseManipulator class
 //---------------------------------------------------------------------------------------------------------
-public class SQLDeleteStatement extends SQLStatement {
-
+public class SQLDeleteStatement extends SQLStatement
+{
     /**
      *
-     * This handles only equality in the WHERE clause. This also expects that
-     * for numeric types in the WHERE clause, a separate Properties object
-     * containing the column name and numeric type indicator will be provided.
-     * For text types, no entry in this Properties object is necessary.
+     * This handles only equality in the WHERE clause. This also
+     * expects that for numeric types in the WHERE clause, a separate
+     * Properties object containing the column name and numeric type
+     * indicator will be provided. For text types, no entry in this
+     * Properties object is necessary.
      */
     //------------------------------------------------------------
-    public SQLDeleteStatement(Properties schema, // the table schema
-            Properties whereValues // the values to delete
-    ) {
-        super();	// implicit, doesn't do anything, but what the hell
+    public SQLDeleteStatement(Properties schema, 		// the table schema
+    						  Properties whereValues	// the values to delete
+							 )
+	{
+    	super();	// implicit, doesn't do anything, but what the hell
 
-        // Begin construction of the actual SQL statement
-        theSQLStatement = "DELETE FROM " + schema.getProperty("TableName");
+		// Begin construction of the actual SQL statement
+		theSQLStatement = "DELETE FROM " + schema.getProperty("TableName");
 
-        // Construct the WHERE part of the SQL statement
-        String theWhereString = "";
+		// Construct the WHERE part of the SQL statement
+		String theWhereString = "";
 
-        // Now, traverse the WHERE clause Properties object
-        if (whereValues != null) {
-            Enumeration theWhereColumns = whereValues.propertyNames();
-            while (theWhereColumns.hasMoreElements() == true) {
-                if (theWhereString.equals("")) {
-                    theWhereString += " WHERE ";
-                } else {
-                    theWhereString += " AND ";
-                }
+		// Now, traverse the WHERE clause Properties object
+		if (whereValues != null)
+		{
+			Enumeration theWhereColumns = whereValues.propertyNames();
+			while (theWhereColumns.hasMoreElements() == true)
+			{
+				if (theWhereString.equals(""))
+				{
+					theWhereString += " WHERE ";
+				}
+				else
+				{
+					theWhereString += " AND ";
+				}
 
-                String theColumnName = (String) theWhereColumns.nextElement();
-                String theColumnValue = insertEscapes(whereValues.getProperty(theColumnName));
+				String theColumnName = (String)theWhereColumns.nextElement();
+				String theColumnValue = insertEscapes(whereValues.getProperty(theColumnName));
 
-                if (theColumnValue.equals("NULL")) {
-                    theWhereString += theColumnName + " IS NULL";
-                } else {
-                    String actualType = "Text";
+				if (theColumnValue.equals("NULL"))
+				{
+					theWhereString += theColumnName + " IS NULL";
+				}
+				else
+				{
+					String actualType = "Text";
 
-                    String whereTypeValue = schema.getProperty(theColumnName);
-                    if (whereTypeValue != null) {
-                        actualType = whereTypeValue;
-                    }
+					String whereTypeValue = schema.getProperty(theColumnName);
+					if (whereTypeValue != null)
+					{
+						actualType = whereTypeValue;
+					}
 
-                    actualType = actualType.toLowerCase();
+					actualType = actualType.toLowerCase();
 
-                    if (actualType.equals("numeric") == true) {
-                        theWhereString += theColumnName + " = " + theColumnValue;
-                    } else {
-                        theWhereString += theColumnName + " = '" + theColumnValue + "'";
+					if (actualType.equals("numeric") == true)
+					{
+						theWhereString += theColumnName + " = " + theColumnValue;
+					}
+					else
+					{
+						theWhereString += theColumnName + " = '" + theColumnValue + "'";
 
-                    }
-                }
-            }
-        }
+					}
+				}
+			}
+		}
 
-        theSQLStatement += theWhereString;
+		theSQLStatement += theWhereString;
 
-        theSQLStatement += ";";
-    }
+		theSQLStatement += ";";
+	}
 }
+
 
 //---------------------------------------------------------------
 //	Revision History:
