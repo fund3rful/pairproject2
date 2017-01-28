@@ -56,5 +56,4 @@ public class PatronTester extends Application {
         mainStage.show();
     }
 
-
 }

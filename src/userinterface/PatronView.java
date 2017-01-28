@@ -139,7 +139,6 @@ public class PatronView extends View {
         address.setEditable(false);
         grid.add(address, 1, 3);
 
-
         HBox doneCont = new HBox(10);
         doneCont.setAlignment(Pos.CENTER);
         cancelButton = new Button("Back");

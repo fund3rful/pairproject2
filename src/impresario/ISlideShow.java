@@ -15,24 +15,21 @@
 //	Revision History: See end of file.
 //
 //*************************************************************
-
 // JavaDoc information
 /** @author		$Author: tomb $ */
 /** @version	$Revision: 1.2 $ */
-
 // specify the package
 package impresario;
 
 // system imports
-
 // local includes
-
 //==============================================================
-public interface ISlideShow
-{
-	
-	/** Swap to the view indicated by the String parameter */
-	public void swapToView(IView viewName);
+public interface ISlideShow {
+
+    /**
+     * Swap to the view indicated by the String parameter
+     */
+    public void swapToView(IView viewName);
 }
 
 //**************************************************************
