@@ -32,13 +32,18 @@ import impresario.IModel;
  * The class containing the Account View for the ATM application
  */
 //==============================================================
-public class AccountView extends View {
+public class PatronView extends View {
 
     // GUI components
-    protected TextField accountNumber;
-    protected TextField acctType;
-    protected TextField balance;
-    protected TextField serviceCharge;
+    protected TextField patronId;
+    protected TextField name;
+    protected TextField address;
+    protected TextField city;
+    protected TextField state;
+    protected TextField zip;
+    protected TextField email;
+    protected TextField dateOfBirth;
+    protected TextField status;
 
     protected Button cancelButton;
 
@@ -47,8 +52,8 @@ public class AccountView extends View {
 
     // constructor for this class -- takes a model object
     //----------------------------------------------------------
-    public AccountView(IModel account) {
-        super(account, "AccountView");
+    public PatronView(IModel account) {
+        super(account, "PatronView");
 
         // create a container for showing the contents
         VBox container = new VBox(10);
@@ -66,8 +71,8 @@ public class AccountView extends View {
 
         populateFields();
 
-        myModel.subscribe("ServiceCharge", this);
-        myModel.subscribe("UpdateStatusMessage", this);
+//        myModel.subscribe("ServiceCharge", this);
+//        myModel.subscribe("UpdateStatusMessage", this);
     }
 
     // Create the title container
@@ -76,7 +81,7 @@ public class AccountView extends View {
         HBox container = new HBox();
         container.setAlignment(Pos.CENTER);
 
-        Text titleText = new Text(" Brockport Bank ATM ");
+        Text titleText = new Text(" Brockport Library ");
         titleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         titleText.setWrappingWidth(300);
         titleText.setTextAlignment(TextAlignment.CENTER);
@@ -110,9 +115,9 @@ public class AccountView extends View {
         accNumLabel.setTextAlignment(TextAlignment.RIGHT);
         grid.add(accNumLabel, 0, 1);
 
-        accountNumber = new TextField();
-        accountNumber.setEditable(false);
-        grid.add(accountNumber, 1, 1);
+        patronId = new TextField();
+        patronId.setEditable(false);
+        grid.add(patronId, 1, 1);
 
         Text acctTypeLabel = new Text(" Account Type : ");
         acctTypeLabel.setFont(myFont);
@@ -120,9 +125,9 @@ public class AccountView extends View {
         acctTypeLabel.setTextAlignment(TextAlignment.RIGHT);
         grid.add(acctTypeLabel, 0, 2);
 
-        acctType = new TextField();
-        acctType.setEditable(false);
-        grid.add(acctType, 1, 2);
+        name = new TextField();
+        name.setEditable(false);
+        grid.add(name, 1, 2);
 
         Text balLabel = new Text(" Account Balance : ");
         balLabel.setFont(myFont);
@@ -130,27 +135,19 @@ public class AccountView extends View {
         balLabel.setTextAlignment(TextAlignment.RIGHT);
         grid.add(balLabel, 0, 3);
 
-        balance = new TextField();
-        balance.setEditable(false);
-        grid.add(balance, 1, 3);
+        address = new TextField();
+        address.setEditable(false);
+        grid.add(address, 1, 3);
+        
+        Text cityLabel = new Text(" City : ");
+        cityLabel.setFont(myFont);
+        cityLabel.setWrappingWidth(150);
+        cityLabel.setTextAlignment(TextAlignment.RIGHT);
+        grid.add(cityLabel, 0, 4);
 
-        Text scLabel = new Text(" Service Charge : ");
-        scLabel.setFont(myFont);
-        scLabel.setWrappingWidth(150);
-        scLabel.setTextAlignment(TextAlignment.RIGHT);
-        grid.add(scLabel, 0, 4);
-
-        serviceCharge = new TextField();
-        serviceCharge.setEditable(true);
-        serviceCharge.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent e) {
-                clearErrorMessage();
-                myModel.stateChangeRequest("ServiceCharge", serviceCharge.getText());
-            }
-        });
-        grid.add(serviceCharge, 1, 4);
+        city = new TextField();
+        city.setEditable(false);
+        grid.add(city, 1, 4);
 
         HBox doneCont = new HBox(10);
         doneCont.setAlignment(Pos.CENTER);
@@ -180,32 +177,34 @@ public class AccountView extends View {
         return statusLog;
     }
 
-    //-------------------------------------------------------------
+    /**
+     * sets the information given by the modal to the input boxes
+     */
     public void populateFields() {
-        accountNumber.setText((String) myModel.getState("AccountNumber"));
-        acctType.setText((String) myModel.getState("Type"));
-        balance.setText((String) myModel.getState("Balance"));
-        serviceCharge.setText((String) myModel.getState("ServiceCharge"));
+        
+        patronId.setText((String) myModel.getState("patronId"));
+        name.setText((String) myModel.getState("name"));
+        address.setText((String) myModel.getState("address"));
+        city.setText((String) myModel.getState("city"));
+        
     }
 
     /**
      * Update method
      */
-    //---------------------------------------------------------
     public void updateState(String key, Object value) {
         clearErrorMessage();
 
-        if (key.equals("ServiceCharge") == true) {
-            String val = (String) value;
-            serviceCharge.setText(val);
-            displayMessage("Service Charge Imposed: $ " + val);
-        }
+//        if (key.equals("ServiceCharge") == true) {
+//            String val = (String) value;
+//            city.setText(val);
+//            displayMessage("Service Charge Imposed: $ " + val);
+//        }
     }
 
     /**
      * Display error message
      */
-    //----------------------------------------------------------
     public void displayErrorMessage(String message) {
         statusLog.displayErrorMessage(message);
     }
@@ -213,7 +212,6 @@ public class AccountView extends View {
     /**
      * Display info message
      */
-    //----------------------------------------------------------
     public void displayMessage(String message) {
         statusLog.displayMessage(message);
     }
@@ -221,14 +219,8 @@ public class AccountView extends View {
     /**
      * Clear error message
      */
-    //----------------------------------------------------------
     public void clearErrorMessage() {
         statusLog.clearErrorMessage();
     }
 
 }
-
-//---------------------------------------------------------------
-//	Revision History:
-//
-

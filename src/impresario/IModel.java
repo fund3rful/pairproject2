@@ -15,30 +15,33 @@
 //	Revision History: See end of file.
 //
 //*************************************************************
-
 // JavaDoc information
 /** @author		$Author: tomb $ */
 /** @version	$Revision: 1.2 $ */
-
 // specify the package
 package impresario;
 
 // system imports
-
 // local includes
-
 //==============================================================
-public interface IModel
-{
-	/** A method that View objects can use for their construction */
-	public Object getState(String key);
-	
-	/** Allow View objects to register for state changes */
-	public void subscribe(String key, IView subscriber);
-	public void unSubscribe(String key, IView subscriber);
-	
-	/** Accept state change requests from Control objects */
-	public void stateChangeRequest(String key, Object value);
+public interface IModel {
+
+    /**
+     * A method that View objects can use for their construction
+     */
+    public Object getState(String key);
+
+    /**
+     * Allow View objects to register for state changes
+     */
+    public void subscribe(String key, IView subscriber);
+
+    public void unSubscribe(String key, IView subscriber);
+
+    /**
+     * Accept state change requests from Control objects
+     */
+    public void stateChangeRequest(String key, Object value);
 }
 
 //**************************************************************
