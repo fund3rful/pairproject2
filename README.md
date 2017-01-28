@@ -1,6 +1,6 @@
 # Library Application
 
-### Technologies
+### Setup
 
 1. Use [Netbeans IDE](https://netbeans.org/downloads/)
   * If you use another IDE make sure to update the .gitignore file to only push the src files and not your IDE config files.
@@ -10,7 +10,7 @@
 4. Read [Database Off Campus Tunnel](https://github.com/CSC-429-Group/Library-Application/wiki/Off-Campus-Database---SSH-Tunneling)
 5. MUST [Java Library needed to compile](https://github.com/CSC-429-Group/Library-Application/wiki/Java-Libraries-need-to-be-added)
 
-### Application Specific Notes
+### Developer Notes
 
 1. Read [Quinton's Database Naming Scheme](https://github.com/CSC-429-Group/Library-Application/wiki/Database-Naming-Scheme)
 2. {Add developer notes pointing to documentation here}
