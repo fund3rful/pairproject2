@@ -79,11 +79,8 @@ abstract public class Persistable {
             Connection theDBConnection = myBroker.getConnection();
 
             /* System.out.println("Persistable.getSchemaInfo(..) connection = " + theDBConnection); */
-            System.out.println("Persistable.getSchemaInfo(..) connection = " + theDBConnection);
             // extract the metadata from the database
             DatabaseMetaData dbMetaData = theDBConnection.getMetaData();
-            System.out.println("got here");
-            System.exit(0);
 
             // create a place to hold our return information
             Properties valToReturn = new Properties();
@@ -92,6 +89,7 @@ abstract public class Persistable {
 
             // get the names of the columns from the database
             ResultSet columnInfo = dbMetaData.getColumns(null, null, tableName, null);
+            
             while (columnInfo.next()) {
                 // DEBUG System.out.println("Column Name = " + columnInfo.getString(4) + ", Column Type = " + columnInfo.getString(6));
                 String typeValue = columnInfo.getString(6);

@@ -41,9 +41,9 @@ public class PatronTester extends Application {
         try {
             View newView = ViewFactory.createView("PatronView", new Patron(1)); // USE VIEW FACTORY
             Scene currentScene = new Scene(newView);
-            myStage.setScene(currentScene);
-            myStage.sizeToScene();
-            WindowPosition.placeCenter(myStage);
+            mainStage.setScene(currentScene);
+            mainStage.sizeToScene();
+            WindowPosition.placeCenter(mainStage);
 
         } catch (Exception exc) {
             System.err.println("PatronTester.PatronTester - could not create PatronTester!");

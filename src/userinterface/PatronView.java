@@ -138,6 +138,16 @@ public class PatronView extends View {
         address = new TextField();
         address.setEditable(false);
         grid.add(address, 1, 3);
+        
+        Text cityLabel = new Text(" City : ");
+        cityLabel.setFont(myFont);
+        cityLabel.setWrappingWidth(150);
+        cityLabel.setTextAlignment(TextAlignment.RIGHT);
+        grid.add(cityLabel, 0, 4);
+
+        city = new TextField();
+        city.setEditable(false);
+        grid.add(city, 1, 4);
 
         HBox doneCont = new HBox(10);
         doneCont.setAlignment(Pos.CENTER);
@@ -171,10 +181,12 @@ public class PatronView extends View {
      * sets the information given by the modal to the input boxes
      */
     public void populateFields() {
+        
         patronId.setText((String) myModel.getState("patronId"));
         name.setText((String) myModel.getState("name"));
-        address.setText((String) myModel.getState("adress"));
+        address.setText((String) myModel.getState("address"));
         city.setText((String) myModel.getState("city"));
+        
     }
 
     /**
