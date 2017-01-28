@@ -12,5 +12,5 @@
 
 ### Developer Notes
 
-1. Read [Quinton's Database Naming Scheme](https://github.com/CSC-429-Group/Library-Application/wiki/Database-Naming-Scheme)
+1. Read (Optional) [Quinton's Database Naming Scheme](https://github.com/CSC-429-Group/Library-Application/wiki/Database-Naming-Scheme)
 2. {Add developer notes pointing to documentation here}
