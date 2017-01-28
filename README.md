@@ -9,6 +9,8 @@
 3. Read [MySQL Workbench setup](https://github.com/CSC-429-Group/Library-Application/wiki/Using-MySQL-Workbench)
 4. Read [Database Off Campus Tunnel](https://github.com/CSC-429-Group/Library-Application/wiki/Off-Campus-Database---SSH-Tunneling)
 5. MUST [Java Library needed to compile](https://github.com/CSC-429-Group/Library-Application/wiki/Java-Libraries-need-to-be-added)
+6. MUST Rename `dbConfig_{on/off}campus.ini` to `dbConfig.ini`. 
+  * Depending on Where you are working. Depends on if you user `server=127.0.0.1` or `server=csdb.brockport.edu`
 
 ### Developer Notes
 
