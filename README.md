@@ -8,6 +8,7 @@
   * This tool is quicker and has more features than PHP My Admin
 3. Read [MySQL Workbench setup](https://github.com/CSC-429-Group/Library-Application/wiki/Using-MySQL-Workbench)
 4. Read [Database Off Campus Tunnel](https://github.com/CSC-429-Group/Library-Application/wiki/Off-Campus-Database---SSH-Tunneling)
+5. MUST [Java Library needed to compile](https://github.com/CSC-429-Group/Library-Application/wiki/Java-Libraries-need-to-be-added)
 
 ### Application Specific Notes
 
