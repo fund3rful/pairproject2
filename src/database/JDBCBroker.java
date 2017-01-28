@@ -71,7 +71,7 @@ public class JDBCBroker {
     // private constructor for singleton
     //----------------------------------------------------------
     protected JDBCBroker() {
-        // DEBUG: System.out.println("JDBCBroker.JDBCBroker()");
+//        System.out.println("JDBCBroker.JDBCBroker()");
         props = new PropertyFile("dbConfig.ini");
         if (props != null) {
             dbName = props.getProperty("dbName");
@@ -103,7 +103,6 @@ public class JDBCBroker {
      */
     //-------------------------------------------------------- 
     public Connection getConnection() {
-        //System.out.println("JDBCBroker.getConnection() with Driver " + theDriver);
         if (myInstance != null) {
             if (theDBConnection == null) {
                 if ((dbName != null) & (username != null) && (password != null)) {

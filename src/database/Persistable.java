@@ -73,13 +73,17 @@ abstract public class Persistable {
     //------------------------------------------------------------
     protected Properties getSchemaInfo(String tableName) {
         // DEBUG System.out.println("Persistable.getSchemaInfo for table " + tableName);
+
         try {
             // Create a connection to the database
             Connection theDBConnection = myBroker.getConnection();
 
             /* System.out.println("Persistable.getSchemaInfo(..) connection = " + theDBConnection); */
+            System.out.println("Persistable.getSchemaInfo(..) connection = " + theDBConnection);
             // extract the metadata from the database
             DatabaseMetaData dbMetaData = theDBConnection.getMetaData();
+            System.out.println("got here");
+            System.exit(0);
 
             // create a place to hold our return information
             Properties valToReturn = new Properties();
