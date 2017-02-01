@@ -1,59 +1,85 @@
 
-import event.Event;
-import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Properties;
 import model.Patron;
-import userinterface.MainStageContainer;
-import userinterface.View;
-import userinterface.ViewFactory;
-import userinterface.WindowPosition;
+import model.PatronCollection;
 
-public class PatronTester extends Application {
+/**
+ *
+ * @author Neoaptt
+ */
+public class PatronTester {
 
-    private Stage myStage;
-    private Stage mainStage;
+    private static final int INSERT = 1;
+    private static final int FIND_DATE_OLDER = 2;
+    private static final int FIND_DATE_YOUNGER = 3;
+    private static final int FIND_ZIP = 4;
+    private static final int FIND_NAME = 5;
 
-    public static void main(String[] args) {
-        launch(args);
+    public void run() {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Enter \n1 to insert a new patron \n2 to find patrons that are older than a given date \n3 to find patrons that are younger than a given date \n4 to find patrons by zip \n5 to find patrons by name");
+        int input = 0;
+        boolean validInput = false;
+        while (!validInput) {
+            try {
+                input = Integer.parseInt(br.readLine());
+                switch (input) {
+                    case INSERT:
+                        PatronTester p = new PatronTester();
+                        p.run();
+                        validInput = true;
+                        break;
+                    case FIND_DATE_OLDER:
+                        System.out.println("Input 2");
+                        validInput = true;
+                        break;
+                    case FIND_DATE_YOUNGER:
+                        System.out.println("Input 3");
+                        validInput = true;
+                        break;
+                    case FIND_ZIP:
+                        System.out.println("Input 4");
+                        validInput = true;
+                        break;
+                    case FIND_NAME:
+                        System.out.println("Input 5");
+                        validInput = true;
+                        break;
+                    default:
+                        System.out.println("Not valid input try again");
+                        break;
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid Number Try Again");
+            }
+        }
+        System.out.println("Finished");
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        System.out.println("Patron Version 3.00");
-        System.out.println("Copyright No One?");
-
-        // Create the top-level container (main frame) and add contents to it.
-        MainStageContainer.setStage(primaryStage, "Brockport Patron Tester");
-        mainStage = MainStageContainer.getInstance();
-
-        // Finish setting up the stage (ENABLE THE GUI TO BE CLOSED USING THE TOP RIGHT
-        // 'X' IN THE WINDOW), and show it.
-        mainStage.setOnCloseRequest(new EventHandler<javafx.stage.WindowEvent>() {
-            @Override
-            public void handle(javafx.stage.WindowEvent event) {
-                System.exit(0);
-            }
-        });
-
+    private void insertCommand() {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Properties prop = new Properties();
         try {
-            View newView = ViewFactory.createView("PatronView", new Patron(1)); // USE VIEW FACTORY
-            Scene currentScene = new Scene(newView);
-            mainStage.setScene(currentScene);
-            mainStage.sizeToScene();
-            WindowPosition.placeCenter(mainStage);
-
-        } catch (Exception exc) {
-            System.err.println("PatronTester.PatronTester - could not create PatronTester!");
-            new Event(Event.getLeafLevelClassName(this), "PatronTester.<init>", "Unable to create PatronTester object", Event.ERROR);
-            exc.printStackTrace();
+            System.out.println("name:");
+            prop.setProperty("name", br.readLine());
+            System.out.println("address:");
+            prop.setProperty("address", br.readLine());
+            System.out.println("city:");
+            prop.setProperty("city", br.readLine());
+            System.out.println("stateCode:");
+            prop.setProperty("stateCode", br.readLine());
+            System.out.println("zip:");
+            prop.setProperty("zip", br.readLine());
+            System.out.println("email:");
+            prop.setProperty("email", br.readLine());
+            System.out.println("dateOfBirth:");
+            prop.setProperty("dateOfBirth", br.readLine());
+            Patron p = new Patron(prop);
+            p.update();
+        } catch (Exception e) {
         }
 
-        WindowPosition.placeCenter(mainStage);
-
-        mainStage.show();
     }
-
 }

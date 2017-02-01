@@ -1,22 +1,29 @@
+// specify the package
 package model;
 
-import exception.InvalidPrimaryKeyException;
+// system imports
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.Vector;
+import javax.swing.JFrame;
 
-/**
- *
- * @author Neoaptt
- */
-public class Patron extends EntityBase {
+// project imports
+import exception.InvalidPrimaryKeyException;
+import database.*;
 
-    private String updateStatusMessage = "";
-    protected Properties dependencies;
+import impresario.IView;
+
+import userinterface.View;
+import userinterface.ViewFactory;
+
+public class Patron_bg extends EntityBase implements IView {
+
     private static final String myTableName = "Patron";
+    protected Properties dependencies;
+    private String updateStatusMessage = "";
 
-    public Patron(int patronId) throws InvalidPrimaryKeyException {
+    public Patron_bg(int patronId) throws InvalidPrimaryKeyException {
         super(myTableName);
         setDependencies();
         String query = "SELECT * FROM " + myTableName + " WHERE (patronId = " + patronId + ")";
@@ -54,7 +61,7 @@ public class Patron extends EntityBase {
         }
     }
 
-    public Patron(Properties props) {
+    public Patron_bg(Properties props) {
         super(myTableName);
 
         setDependencies();
@@ -68,11 +75,6 @@ public class Patron extends EntityBase {
                 persistentState.setProperty(nextKey, nextValue);
             }
         }
-    }
-
-    private void setDependencies() {
-        dependencies = new Properties();
-        myRegistry.setDependencies(dependencies);
     }
 
     public void update() {
@@ -100,6 +102,11 @@ public class Patron extends EntityBase {
         /*DEBUG System.out.println("updateStateInDatabase " + updateStatusMessage);*/
     }
 
+    private void setDependencies() {
+        dependencies = new Properties();
+        myRegistry.setDependencies(dependencies);
+    }
+
     @Override
     public Object getState(String key) {
         if (key.equals("UpdateStatusMessage") == true) {
@@ -120,6 +127,11 @@ public class Patron extends EntityBase {
         if (mySchema == null) {
             mySchema = getSchemaInfo(tableName);
         }
+    }
+
+    @Override
+    public void updateState(String key, Object value) {
+        stateChangeRequest(key, value);
     }
 
 }
