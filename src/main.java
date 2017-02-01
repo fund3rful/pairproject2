@@ -8,32 +8,43 @@ import java.io.InputStreamReader;
  */
 public class main {
 
+    private static final int EXIT = 0;
     private static final int PATRON = 1;
     private static final int BOOK = 2;
 
     public static void main(String[] args) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Enter 1 for Patrion 2 for Book:");
-        int input = 0;
-        while (input != PATRON && input != BOOK) {
+        boolean exit = false;
+        int input;
+        boolean printMenu = true;
+        while (!exit) {
             try {
+                if (printMenu) {
+                    System.out.println("Main Menu \n0 to exit \n1 to enter the Patron menu \n2 to enter the Book menu");
+                    printMenu = false;
+                }
+                System.out.print("Enter Command: ");
                 input = Integer.parseInt(br.readLine());
+                switch (input) {
+                    case EXIT:
+                        exit = true;
+                        break;
+                    case PATRON:
+                        PatronTester.run();
+                        printMenu = true;
+                        break;
+                    case BOOK:
+                        System.out.println("Book Menu not implemented Yet");
+                        printMenu = true;
+                        break;
+                    default:
+                        System.out.println("Not Valid Input, try again");
+                        break;
+                }
             } catch (Exception e) {
-                System.out.println("Invalid Number Try Again");
-            }
-            switch (input) {
-                case PATRON:
-                    PatronTester p = new PatronTester();
-                    p.run();
-                    break;
-                case BOOK:
-                    System.out.println("Input 2");
-                    break;
-                default:
-                    System.out.println("Not 1 or 2 Try Again");
-                    break;
+                System.out.println("Not Valid Input, try again");
             }
         }
-        System.out.println("Finished");
+        System.out.println("Exiting Program");
     }
 }
