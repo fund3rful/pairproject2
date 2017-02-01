@@ -12,7 +12,7 @@ import java.util.Vector;
 public class PatronCollection extends EntityBase {
 
     private String updateStatusMessage = "";
-    private Vector<Patron> patrons;
+    private Vector<Patron> patronList;
     private static final String myTableName = "Patron";
 
     public PatronCollection() {
@@ -32,14 +32,14 @@ public class PatronCollection extends EntityBase {
     }
 
     public void findPatronsWithNameLike(String name) throws Exception {
-        executeQuery("SELECT * FROM " + myTableName + " WHERE (name like '" + name + "')");
+        executeQuery("SELECT * FROM " + myTableName + " WHERE (name like '%" + name + "%')");
     }
 
     private void executeQuery(String query) throws Exception {
         Vector allDataRetrieved = getSelectQueryResult(query);
 
         if (allDataRetrieved != null) {
-            patrons = new Vector<Patron>();
+            patronList = new Vector<Patron>();
 
             for (int cnt = 0; cnt < allDataRetrieved.size(); cnt++) {
                 Properties nextPatronData = (Properties) allDataRetrieved.elementAt(cnt);
@@ -47,7 +47,7 @@ public class PatronCollection extends EntityBase {
                 Patron patron = new Patron(nextPatronData);
 
                 if (patron != null) {
-                    patrons.add(patron);
+                    patronList.add(patron);
                 }
             }
 
@@ -58,12 +58,13 @@ public class PatronCollection extends EntityBase {
 
     @Override
     public Object getState(String key) {
-        if (key.equals("UpdateStatusMessage") == true) {
-            return updateStatusMessage;
+        if (key.equals("patrons")) {
+            return patronList;
+        } else if (key.equals("patronsList")) {
+            return this;
         } else {
-            return persistentState.getProperty(key);
+            return null;
         }
-
     }
 
     @Override

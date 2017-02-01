@@ -16,9 +16,9 @@ public class PatronTester_bg extends Application {
     private Stage myStage;
     private Stage mainStage;
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+//    public static void main(String[] args) {
+//        launch(args);
+//    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {

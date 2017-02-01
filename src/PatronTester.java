@@ -27,8 +27,7 @@ public class PatronTester {
                 input = Integer.parseInt(br.readLine());
                 switch (input) {
                     case INSERT:
-                        PatronTester p = new PatronTester();
-                        p.run();
+                        insertCommand();
                         validInput = true;
                         break;
                     case FIND_DATE_OLDER:
