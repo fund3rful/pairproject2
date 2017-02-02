@@ -36,6 +36,7 @@ public class PatronTester {
         while (!endLoop) {
             try {
                 if (printMenu) {
+                    /*print menu can be set after long commands*/
                     System.out.println("Patron Menu \n0 to go back to main menu \n1 to insert a new patron \n2 to find patrons that are older than a given date \n3 to find patrons that are younger than a given date \n4 to find patrons by zip \n5 to find patrons by name");
                     printMenu = false;
                 }

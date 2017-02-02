@@ -20,6 +20,7 @@ public class main {
         while (!exit) {
             try {
                 if (printMenu) {
+                    /*print menu can be set after long commands*/
                     System.out.println("Main Menu \n0 to exit \n1 to enter the Patron menu \n2 to enter the Book menu");
                     printMenu = false;
                 }
