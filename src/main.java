@@ -43,7 +43,7 @@ public class main {
                         break;
                 }
             } catch (Exception e) {
-                System.out.println("Not Valid Input, try again");
+                System.err.println(e);
             }
         }
         System.out.println("Exiting Program");

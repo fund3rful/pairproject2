@@ -39,7 +39,7 @@ public class GetUserInputConsole {
             df.parse(date);
             return true;
         } catch (ParseException e) {
-            System.out.print("Invalid Date");
+            System.out.print("Invalid Date: Use Only The Format (YYYY-MM-DD)");
             return false;
         }
     }
@@ -48,10 +48,10 @@ public class GetUserInputConsole {
         try {
             Integer.parseInt(number);
         } catch (NumberFormatException e) {
-            System.out.print("Invalid Number");
+            System.out.print("Invalid Number: Use Only Numbers");
             return false;
         } catch (NullPointerException e) {
-            System.out.print("Invalid Number");
+            System.out.print("Invalid Number: Use Only Numbers");
             return false;
         }
         /* only got here if we didn't return false*/
@@ -65,7 +65,7 @@ public class GetUserInputConsole {
         if (m.matches()) {
             return true;
         } else {
-            System.out.print("Invalid Email");
+            System.out.print("Invalid Email: Use the format (example@example.com)");
             return false;
         }
     }
@@ -83,6 +83,7 @@ public class GetUserInputConsole {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         boolean validInput = false;
         String line = null;
+        boolean flagSize = false;
         /*check for a valid input. If none was given, then continue until one is found*/
         while (!validInput) {
             try {
@@ -118,17 +119,27 @@ public class GetUserInputConsole {
                                 }
                                 break;
                             default:
-                                System.out.println("Not Valid Input, try again");
+                                System.out.println("0x0001 Not Valid Input, try again");
                                 break;
                         }
                     } else {
-                        System.out.println("Too Small, needs to be equal to or over " + minlength + " characters, try again");
+                        flagSize = true;
                     }
                 } else {
-                    System.out.println("Too Long, needs to be equal to or under " + maxlength + " characters, try again");
+                    flagSize = true;
+                }
+                if (flagSize) {
+                    /*gives and error message telling the user what went wrong with the size of their input*/
+                    if (minlength > 0 && maxlength > 0) {
+                        System.out.println("Input needs to be at least " + minlength + " characters and at most " + maxlength + " characters, try again");
+                    } else if (minlength > 0) {
+                        System.out.println("Too Small, needs to be at least " + minlength + " characters, try again");
+                    } else {
+                        System.out.println("Too Long, needs to be at most " + maxlength + " characters, try again");
+                    }
                 }
             } catch (Exception e) {
-                System.out.println("Not Valid Input, try again");
+                System.out.println("0x0002 Not Valid Input, try again");
             }
         }
         return line;

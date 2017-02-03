@@ -19,23 +19,23 @@ public class PatronCollection extends EntityBase {
         super("Patron");
     }
 
-    public void findPatronsOlderThan(String date) throws Exception {
+    public void findPatronsOlderThan(String date) throws InvalidPrimaryKeyException {
         executeQuery("SELECT * FROM " + myTableName + " WHERE (dateOfBirth < " + date + ")");
     }
 
-    public void findPatronsYoungerThan(String date) throws Exception {
+    public void findPatronsYoungerThan(String date) throws InvalidPrimaryKeyException {
         executeQuery("SELECT * FROM " + myTableName + " WHERE (dateOfBirth > " + date + ")");
     }
 
-    public void findPatronsAtZipCode(String zip) throws Exception {
+    public void findPatronsAtZipCode(String zip) throws InvalidPrimaryKeyException {
         executeQuery("SELECT * FROM " + myTableName + " WHERE (zip = " + zip + ")");
     }
 
-    public void findPatronsWithNameLike(String name) throws Exception {
+    public void findPatronsWithNameLike(String name) throws InvalidPrimaryKeyException {
         executeQuery("SELECT * FROM " + myTableName + " WHERE (name like '%" + name + "%')");
     }
 
-    private void executeQuery(String query) throws Exception {
+    private void executeQuery(String query) throws InvalidPrimaryKeyException {
         Vector allDataRetrieved = getSelectQueryResult(query);
 
         if (allDataRetrieved != null) {
