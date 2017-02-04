@@ -1,4 +1,5 @@
 
+import exception.InvalidPrimaryKeyException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,7 +12,6 @@ import java.util.regex.Pattern;
 import model.GetUserInputConsole;
 import model.Book;
 import model.BookCollection;
-import model.Patron;
 
 public class BookTester{
     
@@ -87,27 +87,61 @@ public class BookTester{
         System.out.print("Please enter book title (50 char max): ");
         prop.setProperty("bookTitle", GetUserInputConsole.get(0, 50, GetUserInputConsole.STRING).toUpperCase());
         System.out.print("Please enter publication year (4 char max in format yyyy): ");
-        prop.setProperty("pubYear", GetUserInputConsole.get(0,4, GetUserInputConsole.STRING));
-      
+        prop.setProperty("pubYear", GetUserInputConsole.get(0,4, GetUserInputConsole.DATE));
+      //getting stuck here on pub year
         
         /*use the information to create a new book*/
         Book b = new Book(prop);
-        
         b.update();
         System.out.println("\nInsert Successful Returning to Book Menu \n");
+        
     }
 
     private static void findDateOlder() {
         System.out.println("in older");
+        BookCollection b = new BookCollection();
+        System.out.print("Find books older than year (format YYYY): ");
+        try {
+            b.findDateOlderThan(GetUserInputConsole.get(10, 10, GetUserInputConsole.DATE));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+    }
+    private static void findDateYounger() {
+        System.out.println("in yonger");
+        BookCollection b = new BookCollection();
+        System.out.print("Find books yonger than year (format YYYY): ");
+          try {
+            b.findDateYoungerThan(GetUserInputConsole.get(10, 10, GetUserInputConsole.DATE));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
     }
 
-    private static void findDateYounger() {
-        System.out.println("in newer");}
-
     private static void findTitle() {
-     System.out.println("in title");}
-
-    private static void findAuthor() {
-     System.out.println("in author");}
+        System.out.println("in title");
+        BookCollection b = new BookCollection();
+        System.out.print("Find title like: ");
+         try {
+            b.findTitlewithNameLike(GetUserInputConsole.get(10, 10, GetUserInputConsole.STRING));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+    }
+    
+     private static void findAuthor() {
+        System.out.println("in author");
+        BookCollection b = new BookCollection();
+        System.out.print("Find author with name like: ");
+         try {
+            b.findAuthorwithNameLike(GetUserInputConsole.get(10, 10, GetUserInputConsole.STRING));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+    }
 
 }// end class
