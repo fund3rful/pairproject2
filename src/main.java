@@ -24,7 +24,7 @@ public class main {
                     System.out.println("Main Menu \n0 to exit \n1 to enter the Patron menu \n2 to enter the Book menu");
                     printMenu = false;
                 }
-                System.out.print("Enter Command: ");
+                System.out.print("Please make a selection: ");
                 input = Integer.parseInt(br.readLine());
                 switch (input) {
                     case EXIT:
@@ -35,17 +35,17 @@ public class main {
                         printMenu = true;
                         break;
                     case BOOK:
-                        System.out.println("Book Menu not implemented Yet");
+                        BookTester.run();
                         printMenu = true;
                         break;
                     default:
-                        System.out.println("Not Valid Input, try again");
+                        System.out.println("Please make a valid selection.");
                         break;
                 }
             } catch (Exception e) {
-                System.out.println("Not Valid Input, try again");
+                System.out.println("Please make a valid selection.");
             }
         }
         System.out.println("Exiting Program");
-    }
-}
+    }//end main
+}//end class

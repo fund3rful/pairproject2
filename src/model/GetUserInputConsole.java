@@ -23,9 +23,11 @@ public class GetUserInputConsole {
     public static final int DATE = 2;
     public static final int NUMBER = 3;
     public static final int EMAIL = 4;
+    public static final int YEAR =5;
 
     private static final String DATE_FORMAT = "yyyy-MM-dd";
-
+    private static final String PUB_YEAR = "yyyy";
+            
     /**
      * Checks if date is in a valid format
      *
@@ -44,6 +46,17 @@ public class GetUserInputConsole {
         }
     }
 
+    public static boolean isPubYearValid(String year) {
+        try {
+            System.out.println("in pub year");
+            
+            return true;
+        } catch (Exception e) {
+            System.out.print("Invalid Publication Date\n");
+            return false;
+        }
+    }
+    
     public static boolean isNumberValid(String number) {
         try {
             Integer.parseInt(number);
@@ -117,6 +130,13 @@ public class GetUserInputConsole {
                                     validInput = isEmailValid(line);
                                 }
                                 break;
+                            case YEAR:
+                                if (minlength == 0 && line.length() == 0) {
+                                    validInput = true;
+                                } else {
+                                    validInput = isPubYearValid(line);
+                                }
+                                break;    
                             default:
                                 System.out.println("Not Valid Input, try again");
                                 break;
@@ -132,5 +152,5 @@ public class GetUserInputConsole {
             }
         }
         return line;
-    }
-}
+    }//end validation loop
+}//end class
