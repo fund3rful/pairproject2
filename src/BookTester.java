@@ -83,11 +83,11 @@ public class BookTester{
         Properties prop = new Properties();
         /*get all the information via command line and populate a properties object*/
         System.out.print("Please enter author name (30 char max, 1 char min): ");
-        prop.setProperty("authorName", GetUserInputConsole.get(1, 30, GetUserInputConsole.STRING).toUpperCase());
+        prop.setProperty("author", GetUserInputConsole.get(1, 30, GetUserInputConsole.STRING).toUpperCase());
         System.out.print("Please enter book title (50 char max): ");
-        prop.setProperty("bookTitle", GetUserInputConsole.get(0, 50, GetUserInputConsole.STRING).toUpperCase());
+        prop.setProperty("book", GetUserInputConsole.get(0, 50, GetUserInputConsole.STRING).toUpperCase());
         System.out.print("Please enter publication year (4 char max in format yyyy): ");
-        prop.setProperty("pubYear", GetUserInputConsole.get(0,4, GetUserInputConsole.DATE));
+        prop.setProperty("pubYear", GetUserInputConsole.get(0,4, GetUserInputConsole.STRING));
       //getting stuck here on pub year
         
         /*use the information to create a new book*/
@@ -109,7 +109,7 @@ public class BookTester{
         
     }
     private static void findDateYounger() {
-        System.out.println("in yonger");
+        System.out.println("in younger");
         BookCollection b = new BookCollection();
         System.out.print("Find books yonger than year (format YYYY): ");
           try {

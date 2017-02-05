@@ -43,11 +43,7 @@ public class main {
                         break;
                 }
             } catch (Exception e) {
-
                 System.out.println("Please make a valid selection.");
-
-                System.err.println(e);
-
             }
         }
         System.out.println("Exiting Program");
