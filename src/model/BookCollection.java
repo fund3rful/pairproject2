@@ -11,7 +11,6 @@ import java.util.Vector;
  */
 public class BookCollection extends EntityBase {
 
-    private String updateStatusMessage = "";
     private Vector<Book> bookList;
     private static final String myTableName = "Book";
 
@@ -19,93 +18,67 @@ public class BookCollection extends EntityBase {
         super(myTableName);
     }
 
-    public void findDateOlderThan(String year) throws Exception {
-        try {
-            //need to set to connect to database??
-            Statement stmt = connection to database
-            String query = "SELECT * FROM " + myTableName + " WHERE (date published < '" + year + "')";
-            QuerySet qs = stmt.executeQuery(query);
-            while (qs.next())
-             {
-                int bookID = qs.getInt("Book ID: ");
-                String title = qs.getString("Title: ");
-                String author = qs.getString("Author: ");
-                int pubYear = qs.getInt("Published year: ");
-                System.out.format("%s, %s, %s, %s, %s, %s\n", bookID, title, author, pubYear);
-            }
-        }
-        catch (Exception e)
-        {
-        System.err.println(e.getMessage());
-        }//end try 
+    public void findBooksOlderThan(String year) throws InvalidPrimaryKeyException {
+        
+        String sql = "SELECT * FROM " + myTableName + " WHERE (dateOfBirth < '" + year + "')";
+        executeQuery(sql);
     }
 
 
-    public void findDateYoungerThan(String year) throws Exception {
-        try {
-            //need to set to connect to database??
-            Statement stmt = connection to database
-            String query = "SELECT * FROM " + myTableName + " WHERE (date published > '" + year + "')";
-            QuerySet qs = stmt.executeQuery(query);
-            while (qs.next())
-             {
-                int bookID = qs.getInt("Book ID: ");
-                String title = qs.getString("Title: ");
-                String author = qs.getString("Author: ");
-                int pubYear = qs.getInt("Published year: ");
-                System.out.format("%s, %s, %s, %s, %s, %s\n", bookID, title, author, pubYear);
-            }
-        }
-        catch (Exception e)
-        {
-        System.err.println(e.getMessage());
-        }//end try 
+    public void findBooksYoungerThan(String year) throws InvalidPrimaryKeyException {
+            executeQuery("SELECT * FROM " + myTableName + " WHERE (date published > '" + year + "')");      
     }
 
-    public void findTitlewithNameLike(String name) throws Exception {
-        try {
-            //need to set to connect to database??
-            Statement stmt = connection to database  
-            String query = "SELECT * FROM " + myTableName + " WHERE (title name is like '" + name + "')";
-            QuerySet qs = stmt.executeQuery(query);
-            while (qs.next())
-             {
-                int bookID = qs.getInt("Book ID: ");
-                String title = qs.getString("Title: ");
-                String author = qs.getString("Author: ");
-                int pubYear = qs.getInt("Published year: ");
-                System.out.format("%s, %s, %s, %s, %s, %s\n", bookID, title, author, pubYear);
-            }
-        }
-        catch (Exception e)
-        {
-        System.err.println(e.getMessage());
-        }//end try 
+    public void findBooksWithTitleLike(String name) throws InvalidPrimaryKeyException {
+            executeQuery("SELECT * FROM " + myTableName + " WHERE (title name is like '" + name + "')");      
     }
 
-    public void findAuthorwithNameLike(String name) throws Exception {
-        try {
-            //need to set to connect to database??
-            Statement stmt = connection to database
-            String query = "SELECT * FROM " + myTableName + " WHERE (author name is like'" + name + "')";
-            QuerySet qs = stmt.executeQuery(query);
-            while (qs.next())
-             {
-                int bookID = qs.getInt("Book ID: ");
-                String title = qs.getString("Title: ");
-                String author = qs.getString("Author: ");
-                int pubYear = qs.getInt("Published year: ");
-                System.out.format("%s, %s, %s, %s, %s, %s\n", bookID, title, author, pubYear);
-            }
-        }
-        catch (Exception e)
-        {
-        System.err.println(e.getMessage());
-        }//end try 
+    public void findBooksWithAuthorLike(String name) throws InvalidPrimaryKeyException {
+            executeQuery("SELECT * FROM " + myTableName + " WHERE (author name is like'" + name + "')");
     }
 
+private void executeQuery(String query) throws InvalidPrimaryKeyException {
+        Vector allDataRetrieved = getSelectQueryResult(query);
 
+        if (allDataRetrieved != null) {
+            bookList = new Vector<Book>();
+
+            for (int cnt = 0; cnt < allDataRetrieved.size(); cnt++) {
+                Properties nextBookData = (Properties) allDataRetrieved.elementAt(cnt);
+
+                Book book = new Book(nextBookData);
+
+                if (book != null) {
+                    bookList.add(book);
+                }
+            }
+
+        } else {
+            throw new InvalidPrimaryKeyException("No books found");
+        }
+    }
+
+    public Object getState(String key) {
+        if (key.equals("books")) {
+            return bookList;
+        } else if (key.equals("bookList")) {
+            return this;
+        } else {
+            return null;
+        }
+    }
+
+    public void stateChangeRequest(String key, Object value) {
+        myRegistry.updateSubscribers(key, this);
+    }
+
+    protected void initializeSchema(String tableName) {
+        if (mySchema == null) {
+            mySchema = getSchemaInfo(tableName);
+        }
+    }
+    
 
 
     
-}
+}//end class

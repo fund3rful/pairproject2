@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Properties;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import model.GetUserInputConsole;
@@ -79,7 +80,6 @@ public class BookTester{
 
     
     private static void insertCommand() throws IOException {
-
         Properties prop = new Properties();
         /*get all the information via command line and populate a properties object*/
         System.out.print("Please enter author name (30 char max, 1 char min): ");
@@ -88,7 +88,7 @@ public class BookTester{
         prop.setProperty("book", GetUserInputConsole.get(0, 50, GetUserInputConsole.STRING).toUpperCase());
         System.out.print("Please enter publication year (4 char max in format yyyy): ");
         prop.setProperty("pubYear", GetUserInputConsole.get(0,4, GetUserInputConsole.STRING));
-      //getting stuck here on pub year
+  //getting stuck here on pub year
         
         /*use the information to create a new book*/
         Book b = new Book(prop);
@@ -98,24 +98,24 @@ public class BookTester{
     }
 
     private static void findDateOlder() {
-        System.out.println("in older");
         BookCollection b = new BookCollection();
         System.out.print("Find books older than year (format YYYY): ");
         try {
-            b.findDateOlderThan(GetUserInputConsole.get(10, 10, GetUserInputConsole.DATE));
-        } catch (Exception e) {
-            System.out.println(e);
+            b.findBooksOlderThan(GetUserInputConsole.get(10, 10, GetUserInputConsole.STRING));
+            printBookCollectionToConsole(b);
+        }catch (InvalidPrimaryKeyException ex) {
+            System.out.println(ex);
         }
         
     }
     private static void findDateYounger() {
-        System.out.println("in younger");
         BookCollection b = new BookCollection();
         System.out.print("Find books yonger than year (format YYYY): ");
-          try {
-            b.findDateYoungerThan(GetUserInputConsole.get(10, 10, GetUserInputConsole.DATE));
-        } catch (Exception e) {
-            System.out.println(e);
+         try {
+            b.findBooksYoungerThan(GetUserInputConsole.get(10, 10, GetUserInputConsole.STRING));
+            printBookCollectionToConsole(b);
+        } catch (InvalidPrimaryKeyException ex) {
+            System.out.println(ex);
         }
         
     }
@@ -123,25 +123,42 @@ public class BookTester{
     private static void findTitle() {
         System.out.println("in title");
         BookCollection b = new BookCollection();
-        System.out.print("Find title like: ");
-         try {
-            b.findTitlewithNameLike(GetUserInputConsole.get(10, 10, GetUserInputConsole.STRING));
-        } catch (Exception e) {
-            System.out.println(e);
+       try {
+            b.findBooksWithTitleLike(GetUserInputConsole.get(1, 30, GetUserInputConsole.STRING));
+            printBookCollectionToConsole(b);
+        } catch (InvalidPrimaryKeyException ex) {
+            System.out.println(ex);
         }
         
     }
     
      private static void findAuthor() {
-        System.out.println("in author");
         BookCollection b = new BookCollection();
         System.out.print("Find author with name like: ");
-         try {
-            b.findAuthorwithNameLike(GetUserInputConsole.get(10, 10, GetUserInputConsole.STRING));
-        } catch (Exception e) {
-            System.out.println(e);
+        try {
+            b.findBooksWithAuthorLike(GetUserInputConsole.get(1, 30, GetUserInputConsole.STRING));
+            printBookCollectionToConsole(b);
+        } catch (InvalidPrimaryKeyException ex) {
+            System.out.println(ex);
         }
+        } 
         
-    }
-
+           private static void printBookCollectionToConsole(BookCollection b) {
+        Vector<Book> bookList = (Vector<Book>) b.getState("Books");
+        String leftAlignFormat = "| %-30s | %-50s | %-20s";
+        System.out.println("");
+        System.out.format("+--------------------------------+----------------------------------------------------+----------------------+----+---%n");
+        System.out.format("| Title                           | Author                                            | Publish Year                 | %n");
+        System.out.format("+--------------------------------+----------------------------------------------------+----------------------+----+---%n");
+        for (Book book : bookList) {
+            System.out.format(leftAlignFormat, book.getState("Title"), book.getState("Author"), book.getState("Publish Year"));
+        System.out.format("+--------------------------------+----------------------------------------------------+----------------------+----+-----%n");
+        System.out.println("Press any key to continue...");
+         try {
+            System.in.read();
+            } catch (Exception e) {
+            }
+         }
+        }
+           
 }// end class
