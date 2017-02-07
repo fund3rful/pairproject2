@@ -26,7 +26,7 @@ public class BookTester{
     
       public static void run() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int userSelection = 0;
+        int userSelection=0;
         boolean selectionLoop = false;
         boolean printMenu = true;
         while (!selectionLoop) {
@@ -72,7 +72,7 @@ public class BookTester{
                         break;
                 }
             } catch (Exception e) {
-                System.out.println("Input not valid, please select again.");
+                System.out.println("IN CASE CATCH\n Input not valid, please select again.");
             }
         }
         System.out.println("\nReturning to Main Menu\n\n");
