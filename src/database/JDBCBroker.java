@@ -72,7 +72,7 @@ public class JDBCBroker {
     //----------------------------------------------------------
     protected JDBCBroker() {
 //        System.out.println("JDBCBroker.JDBCBroker()");
-        props = new PropertyFile("dbConfig_offcampus.ini");
+        props = new PropertyFile("dbConfig_oncampus.ini");
         if (props != null) {
             dbName = props.getProperty("dbName");
             username = props.getProperty("username");

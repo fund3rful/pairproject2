@@ -16,10 +16,7 @@ import model.GetUserInputConsole;
 import model.Patron;
 import model.PatronCollection;
 
-/**
- *
- * @author Neoaptt
- */
+
 public class PatronTester {
 
     private static final int MAIN_MENU = 0;

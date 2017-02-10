@@ -5,10 +5,7 @@ import exception.InvalidPrimaryKeyException;
 import java.util.Properties;
 import java.util.Vector;
 
-/**
- *
- * @author JJ
- */
+
 public class BookCollection extends EntityBase {
 
     private Vector<Book> bookList;

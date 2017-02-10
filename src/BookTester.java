@@ -35,8 +35,8 @@ public class BookTester{
                     /*print menu can be set after long commands*/
                     System.out.println("\nBook Menu \n0 to go back to main menu "
                             + "\n1 to insert a new book "
-                            + "\n2 to find books older than a given date "
-                            + "\n3 to find books younger than a given date "
+                            + "\n2 to find books older than a given year "
+                            + "\n3 to find books younger than a given year "
                             + "\n4 to find books with a title like: "
                             + "\n5 to find books with an author name like: ");
                     printMenu = false;
@@ -72,7 +72,7 @@ public class BookTester{
                         break;
                 }
             } catch (Exception e) {
-                System.out.println("/nIN CASE CATCH\n Input not valid, please select again."+e);
+                System.out.println("/nIN CASE CATCH\n Input not valid, please select again.");
             }
         }
         System.out.println("\nReturning to Main Menu\n\n");
@@ -88,7 +88,6 @@ public class BookTester{
         prop.setProperty("title", GetUserInputConsole.get(0, 50, GetUserInputConsole.STRING));
         System.out.print("Please enter publication year (4 char max in format yyyy): ");
         prop.setProperty("pubYear", GetUserInputConsole.get(4,4, GetUserInputConsole.NUMBER));
-  //getting stuck here on pub year
         
         /*use the information to create a new book*/
         Book b = new Book(prop);
@@ -101,7 +100,7 @@ public class BookTester{
         BookCollection b = new BookCollection();
         System.out.print("Find books older than year (format YYYY): ");
         try {
-            b.findBooksOlderThan(GetUserInputConsole.get(10, 10, GetUserInputConsole.STRING));
+            b.findBooksOlderThan(GetUserInputConsole.get(4, 4, GetUserInputConsole.NUMBER));
             printBookCollectionToConsole(b);
         }catch (InvalidPrimaryKeyException ex) {
             System.out.println(ex);
@@ -112,7 +111,7 @@ public class BookTester{
         BookCollection b = new BookCollection();
         System.out.print("Find books yonger than year (format YYYY): ");
          try {
-            b.findBooksYoungerThan(GetUserInputConsole.get(10, 10, GetUserInputConsole.STRING));
+            b.findBooksYoungerThan(GetUserInputConsole.get(4, 4, GetUserInputConsole.NUMBER));
             printBookCollectionToConsole(b);
         } catch (InvalidPrimaryKeyException ex) {
             System.out.println(ex);
@@ -144,14 +143,14 @@ public class BookTester{
         } 
         
            private static void printBookCollectionToConsole(BookCollection b) {
-        Vector<Book> bookList = (Vector<Book>) b.getState("Books");
-        String leftAlignFormat = "| %-30s | %-50s | %-20s";
+        Vector<Book> bookList = (Vector<Book>) b.getState("books");
+        String leftAlignFormat = "| %-30s | %-50s | %-20s |%n";
         System.out.println("");
         System.out.format("+--------------------------------+----------------------------------------------------+----------------------+----+---%n");
         System.out.format("| Title                           | Author                                            | Publish Year                 | %n");
         System.out.format("+--------------------------------+----------------------------------------------------+----------------------+----+---%n");
         for (Book book : bookList) {
-            System.out.format(leftAlignFormat, book.getState("Title"), book.getState("Author"), book.getState("Publish Year"));
+            System.out.format(leftAlignFormat, book.getState("title"), book.getState("author"), book.getState("pubYear"));
         System.out.format("+--------------------------------+----------------------------------------------------+----------------------+----+-----%n");
         System.out.println("Press any key to continue...");
          try {
