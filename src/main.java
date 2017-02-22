@@ -13,14 +13,14 @@ public class main {
     private static final int BOOK = 2;
 
     public static void main(String[] args) {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    /**    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         boolean exit = false;
         int input;
         boolean printMenu = true;
         while (!exit) {
             try {
                 if (printMenu) {
-                    /*print menu can be set after long commands*/
+                    /*print menu can be set after long commands
                     System.out.println("Main Menu \n0 to exit \n1 to enter the Patron menu \n2 to enter the Book menu");
                     printMenu = false;
                 }
@@ -47,5 +47,8 @@ public class main {
             }
         }
         System.out.println("Exiting Program");
+*/
+    HelloWorld hw = new HelloWorld();
+    hw.start(Stage primaryStage);
     }//end main
 }//end class

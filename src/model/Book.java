@@ -71,6 +71,15 @@ public class Book extends EntityBase {
         }
     }
     
+    /**
+     * for creation of the GUI "BookView"
+     */
+    public Book(){
+        super(myTableName);
+        Properties persistentState;
+        persistentState = new Properties();
+    }
+    
      public void update() {
         updateStateInDatabase();
     }
@@ -122,7 +131,7 @@ public class Book extends EntityBase {
     public void updateState(String key, Object value) {
         stateChangeRequest(key, value);
     }
-    
+     
     
     
     
