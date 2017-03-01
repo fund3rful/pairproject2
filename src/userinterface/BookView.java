@@ -120,7 +120,7 @@ public class BookView extends View {
         grid.add(authorLabel, 0, 2);
 
         author = new TextField();
-        author.setEditable(false);
+        author.setEditable(true);
         grid.add(author, 1, 2);
         
         Text titleTypeLabel = new Text(" Title : ");
@@ -130,7 +130,7 @@ public class BookView extends View {
         grid.add(titleTypeLabel, 0, 3);
 
         title = new TextField();
-        title.setEditable(false);
+        title.setEditable(true);
         grid.add(title, 1, 3);
 
         Text pubYearLabel = new Text(" Pub Year : ");
@@ -140,7 +140,7 @@ public class BookView extends View {
         grid.add(pubYearLabel, 0, 4);
 
         pubYear = new TextField();
-        pubYear.setEditable(false);
+        pubYear.setEditable(true);
         grid.add(pubYear, 1, 4);
         
         Text statusLabel = new Text(" Status : ");
@@ -150,7 +150,7 @@ public class BookView extends View {
         grid.add(statusLabel, 0, 5);
 
         status = new TextField();
-        status.setEditable(false);
+        status.setEditable(true);
         grid.add(status, 1, 5);
         
        

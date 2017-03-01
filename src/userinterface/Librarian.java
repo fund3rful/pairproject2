@@ -24,10 +24,6 @@ public class Librarian extends Application {
         launch(args);
     }
     
-    public void printShit(String s)
-    {
-        System.out.println(s);
-    }
     
     //Librarian view
     @Override

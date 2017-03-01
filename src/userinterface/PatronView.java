@@ -102,7 +102,7 @@ public class PatronView extends View {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Text prompt = new Text("ACCOUNT INFORMATION");
+        Text prompt = new Text("PATRON INFORMATION");
         prompt.setWrappingWidth(400);
         prompt.setTextAlignment(TextAlignment.CENTER);
         prompt.setFill(Color.BLACK);
@@ -126,7 +126,7 @@ public class PatronView extends View {
         grid.add(acctTypeLabel, 0, 2);
 
         name = new TextField();
-        name.setEditable(false);
+        name.setEditable(true);
         grid.add(name, 1, 2);
 
         Text balLabel = new Text(" Account Balance : ");
@@ -136,7 +136,7 @@ public class PatronView extends View {
         grid.add(balLabel, 0, 3);
 
         address = new TextField();
-        address.setEditable(false);
+        address.setEditable(true);
         grid.add(address, 1, 3);
         
         Text cityLabel = new Text(" City : ");
@@ -146,7 +146,7 @@ public class PatronView extends View {
         grid.add(cityLabel, 0, 4);
 
         city = new TextField();
-        city.setEditable(false);
+        city.setEditable(true);
         grid.add(city, 1, 4);
 
         HBox doneCont = new HBox(10);

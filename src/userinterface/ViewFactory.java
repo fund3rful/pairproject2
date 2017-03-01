@@ -12,7 +12,6 @@ public class ViewFactory {
         else if(viewName.equals("BookView")){
                 return new BookView(model);
         }
-        
         else {
             return null;
         }

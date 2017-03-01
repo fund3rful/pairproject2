@@ -5,7 +5,6 @@
  */
 package userinterface;
 
-import exception.InvalidPrimaryKeyException;
 import impresario.IModel;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -21,8 +20,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.BookCollection;
-import model.GetUserInputConsole;
 
 /**
  *
@@ -67,21 +64,9 @@ public class SearchBooksView {
             @Override
             public void handle(ActionEvent e){
                 
-                String searchTitle;
-                searchTitle = bookTextField.getText();
-                BookCollection b = new BookCollection();
-       try {
-            b.findBooksWithTitleLike(searchTitle);
-             //printBookCollectionToConsole(b);
-        } catch (InvalidPrimaryKeyException ex) {
-            System.out.println(ex);
-        }
-                
-                Librarian lib = new Librarian();
-                lib.printShit(searchTitle);
+                String temp;
+                temp = bookTextField.getText();
             }
-            
-            
        
     });
        Scene scene = new Scene(grid, 400, 400);

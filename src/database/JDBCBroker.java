@@ -21,8 +21,8 @@
 package database;
 
 /// system imports
-import java.util.Enumeration;
-import java.sql.Driver;
+import java.util.*;
+import java.sql.*;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -107,6 +107,8 @@ public class JDBCBroker {
             if (theDBConnection == null) {
                 if ((dbName != null) & (username != null) && (password != null)) {
                     try {
+                        //debug
+                     //   System.out.println("server = "+server+", dbname = "+dbName+", username = "+username+", password = "+password);
                         // Create a connection to the database
                         theDBConnection = theDriver.connect("jdbc:mysql://" + server + ":3306/"
                                 + dbName + "?" + "user=" + username + "&password="

@@ -67,8 +67,6 @@ public class SearchPatronView {
                 String temp;
                 temp = patronTextField.getText();
                 int tempInt = Integer.parseInt(temp);
-                Librarian lib = new Librarian();
-                lib.printShit(temp);
             }
        
     });
