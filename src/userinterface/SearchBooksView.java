@@ -9,6 +9,7 @@ import impresario.IModel;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -25,16 +27,26 @@ import javafx.stage.Stage;
  *
  * @author Andrew
  */
-public class SearchBooksView {
+public class SearchBooksView extends View {
     
-    public SearchBooksView(){
-           
+    public SearchBooksView(IModel model){
+        super(model, "SearchBooksView");
         
+        //create a container 
+        VBox container = new VBox(10);
+        container.setPadding(new Insets(15,5,5,5));
+        
+        //all GUI components
+        container.getChildren().add(createFormContent());
+        
+        getChildren().add(container);
     }
 
     
 
-    public Scene start(Stage stage) throws Exception {
+    public VBox createFormContent(){
+        VBox vbox = new VBox(10);
+        
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -69,8 +81,13 @@ public class SearchBooksView {
             }
        
     });
-       Scene scene = new Scene(grid, 400, 400);
-       return scene;
+       vbox.getChildren().add(grid);
+       return vbox;
     
+    }
+
+    @Override
+    public void updateState(String key, Object value) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

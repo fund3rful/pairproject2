@@ -94,12 +94,14 @@ public class BookView extends View {
     private VBox createFormContent() {
         VBox vbox = new VBox(10);
 
+        //grid
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
+        //ALL TEXT FIELD LABELS
         Text prompt = new Text("BOOK INFORMATION");
         prompt.setWrappingWidth(400);
         prompt.setTextAlignment(TextAlignment.CENTER);
@@ -164,7 +166,13 @@ public class BookView extends View {
        // status.setEditable(true);
         grid.add(status, 1, 5);
         
-       
+        MessageView messageView = createStatusLog("");
+        messageView.setFont(myFont);
+        messageView.setWrappingWidth(150);
+        messageView.setTextAlignment(TextAlignment.RIGHT);
+        grid.add(messageView,0,7);
+        
+        //INB4 BUTTON
         HBox doneCont = new HBox(10);
         doneCont.setAlignment(Pos.CENTER_RIGHT);
         cancelButton = new Button("Done");
@@ -173,12 +181,20 @@ public class BookView extends View {
 
             @Override
             public void handle(ActionEvent e) {
-                clearErrorMessage();
-                myModel.stateChangeRequest("AccountCancelled", null);
+                
+                
+                Librarian lib = new Librarian();
+                lib.start();
+                
+                //clearErrorMessage();
+                 messageView.displayMessage("Done button pressed");
+                //myModel.stateChangeRequest("AccountCancelled", null);
             }
         });
+        
         doneCont.getChildren().add(cancelButton);
         grid.add(doneCont, 1,6);
+       
         
         HBox hbSubmit = new HBox(10);
         hbSubmit.setAlignment(Pos.CENTER_LEFT);
@@ -188,13 +204,15 @@ public class BookView extends View {
 
             @Override
             public void handle(ActionEvent e) {
-                createStatusLog("Submit Button Pressed");
+                messageView.displayMessage("Submit button pressed");
                 
             }
         });
         
         hbSubmit.getChildren().add(submitButton);
-        grid.add(hbSubmit,1,6);
+        grid.add(hbSubmit,0,6);
+        
+        
         
         vbox.getChildren().add(grid);
         //vbox.getChildren().add(doneCont);
