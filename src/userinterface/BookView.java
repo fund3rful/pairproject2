@@ -27,6 +27,9 @@ import java.util.Properties;
 
 // project imports
 import impresario.IModel;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 
 /**
  * The class containing the Account View for the ATM application
@@ -39,9 +42,10 @@ public class BookView extends View {
     protected TextField author;
     protected TextField title;
     protected TextField pubYear;
-    protected TextField status;
+    protected ComboBox status;
 
     protected Button cancelButton;
+    protected Button submitButton;
 
     // For showing error message
     protected MessageView statusLog;
@@ -107,11 +111,11 @@ public class BookView extends View {
         bookNumLabel.setFont(myFont);
         bookNumLabel.setWrappingWidth(150);
         bookNumLabel.setTextAlignment(TextAlignment.RIGHT);
-        grid.add(bookNumLabel, 0, 1);
+        //grid.add(bookNumLabel, 0, 1);
 
         bookID = new TextField();
-        bookID.setEditable(false);
-        grid.add(bookID, 1, 1);
+        bookID.setEditable(true);
+        //grid.add(bookID, 1, 1);
 
         Text authorLabel = new Text(" Author : ");
         authorLabel.setFont(myFont);
@@ -149,14 +153,21 @@ public class BookView extends View {
         statusLabel.setTextAlignment(TextAlignment.RIGHT);
         grid.add(statusLabel, 0, 5);
 
-        status = new TextField();
-        status.setEditable(true);
+        ObservableList<String> options =
+                FXCollections.observableArrayList(
+                "Active",
+                "Inactive"
+                );
+        status = new ComboBox(options);
+       
+        //status = new TextField();
+       // status.setEditable(true);
         grid.add(status, 1, 5);
         
        
         HBox doneCont = new HBox(10);
-        doneCont.setAlignment(Pos.CENTER);
-        cancelButton = new Button("Back");
+        doneCont.setAlignment(Pos.CENTER_RIGHT);
+        cancelButton = new Button("Done");
         cancelButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -167,9 +178,27 @@ public class BookView extends View {
             }
         });
         doneCont.getChildren().add(cancelButton);
+        grid.add(doneCont, 1,6);
+        
+        HBox hbSubmit = new HBox(10);
+        hbSubmit.setAlignment(Pos.CENTER_LEFT);
+        submitButton = new Button("Submit");
+        submitButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        submitButton.setOnAction(new EventHandler<ActionEvent>() {
 
+            @Override
+            public void handle(ActionEvent e) {
+                createStatusLog("Submit Button Pressed");
+                
+            }
+        });
+        
+        hbSubmit.getChildren().add(submitButton);
+        grid.add(hbSubmit,1,6);
+        
         vbox.getChildren().add(grid);
-        vbox.getChildren().add(doneCont);
+        //vbox.getChildren().add(doneCont);
+       // vbox.getChildren().add(hbSubmit);
 
         return vbox;
     }
@@ -188,7 +217,7 @@ public class BookView extends View {
         title.setText((String) myModel.getState("Title"));
         author.setText((String) myModel.getState("Author"));
         pubYear.setText((String) myModel.getState("Pub Year"));
-        status.setText((String) myModel.getState("Status"));
+        //status.setText((String) myModel.getState("Status"));
     }
 
     /**

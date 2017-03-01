@@ -8,7 +8,7 @@ import java.util.Vector;
 
 /**
  *
- * @author Neoaptt
+ * @author Ryan and Andrew
  */
 public class Patron extends EntityBase {
 
@@ -74,6 +74,10 @@ public class Patron extends EntityBase {
         super(myTableName);
         
         persistentState = new Properties();
+    }
+    public void processNewPatron(Properties p)
+    {
+        
     }
 
     private void setDependencies() {

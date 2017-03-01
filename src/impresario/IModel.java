@@ -22,6 +22,9 @@
 package impresario;
 
 // system imports
+
+import java.util.Properties;
+
 // local includes
 //==============================================================
 public interface IModel {
@@ -42,6 +45,7 @@ public interface IModel {
      * Accept state change requests from Control objects
      */
     public void stateChangeRequest(String key, Object value);
+
 }
 
 //**************************************************************
