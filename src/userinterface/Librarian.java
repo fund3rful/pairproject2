@@ -213,6 +213,16 @@ public class Librarian implements IModel, IView {
             HBox hbdoneBtn = new HBox(10);
             hbdoneBtn.setAlignment(Pos.CENTER);
             hbdoneBtn.getChildren().add(doneBtn);
+            
+            doneBtn.setOnAction(new EventHandler<ActionEvent>(){
+                
+                @Override
+                public void handle(ActionEvent e){
+                    System.exit(0);
+                }
+            });
+            
+            
             grid.add(hbdoneBtn, 0, 10);
 
             VBox vb = new VBox(10);
