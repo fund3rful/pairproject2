@@ -1,4 +1,5 @@
 
+import userinterface.Librarian;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -48,7 +49,7 @@ public class main {
         }
         System.out.println("Exiting Program");
 */
-    HelloWorld hw = new HelloWorld();
-    hw.start(Stage primaryStage);
+    Librarian lib = new Librarian();
+    lib.run(args);
     }//end main
 }//end class

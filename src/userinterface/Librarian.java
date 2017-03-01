@@ -1,5 +1,9 @@
+package userinterface;
 
 
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,17 +13,22 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
-import model.Book;
-import userinterface.BookView;
+import model.*;
+import userinterface.*;
  
-public class HelloWorld extends Application {
-    public static void main(String[] args) {
+public class Librarian extends Application {
+    public Librarian(){
+        
+    }
+    public static void run(String[] args) {
         launch(args);
     }
     
+    
+    //Librarian view
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Welcome Screen");
+        primaryStage.setTitle("Pair Project 2");
         //grids
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -51,7 +60,9 @@ public class HelloWorld extends Application {
             public void handle(ActionEvent e){
                 Book book = new Book();
                 BookView bv = new BookView(book);
-                View bookView = new View(BookView);
+                Scene bvScene = new Scene(bv);
+                
+                primaryStage.setScene(bvScene);
             }
 
             
@@ -66,6 +77,19 @@ public class HelloWorld extends Application {
         hbNewPatronBtn.getChildren().add(newPatronBtn);
         grid.add(hbNewPatronBtn, 0, 2);
         
+        newPatronBtn.setOnAction(new EventHandler<ActionEvent>(){
+            
+            @Override
+            public void handle(ActionEvent e){
+                Patron patron = new Patron();
+                PatronView pv = new PatronView(patron);
+                Scene pvScene = new Scene(pv);
+                
+                primaryStage.setScene(pvScene);
+                
+            }
+        });
+        
         //search books
         Button searchBookBtn = new Button("Search Books");
         HBox hbsearchBookBtn = new HBox(10); 
@@ -73,12 +97,54 @@ public class HelloWorld extends Application {
         hbsearchBookBtn.getChildren().add(searchBookBtn);
         grid.add(hbsearchBookBtn, 0, 3);
         
+        searchBookBtn.setOnAction(new EventHandler<ActionEvent>(){
+        
+            @Override
+            public void handle (ActionEvent e){
+                SearchBooksView SBV;
+                SBV = new SearchBooksView();
+                try {
+                Scene sbvScene;
+                    sbvScene = SBV.start(primaryStage);
+                
+                
+                primaryStage.setScene(sbvScene);
+                
+                } catch (Exception ex) {
+                    Logger.getLogger(Librarian.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+        }
+    
+        });
+        
         //search patrons button
         Button searchPatronBtn = new Button("Search Patron");
         HBox hbsearchPatronBtn = new HBox(10); 
         hbsearchPatronBtn.setAlignment(Pos.CENTER);
         hbsearchPatronBtn.getChildren().add(searchPatronBtn);
         grid.add(hbsearchPatronBtn, 0, 4);
+        
+        searchPatronBtn.setOnAction(new EventHandler<ActionEvent>(){
+        
+            @Override
+            public void handle (ActionEvent e){
+                SearchPatronView SPV;
+                SPV = new SearchPatronView();
+                try {
+                Scene spvScene;
+                    spvScene = SPV.start(primaryStage);
+                
+                
+                primaryStage.setScene(spvScene);
+                
+                } catch (Exception ex) {
+                    Logger.getLogger(Librarian.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+        }
+    
+        });
         
         //Done Button
         Button doneBtn = new Button("DONE");

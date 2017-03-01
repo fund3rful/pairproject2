@@ -8,15 +8,14 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.util.Vector;
 
-
 public class Book extends EntityBase {
-    
+
     private static final String myTableName = "Book";
     protected Properties dependencies;
     private String updateStatusMessage = "";
-    
+
     public Book(int bookID)
-                throws InvalidPrimaryKeyException {
+            throws InvalidPrimaryKeyException {
         super(myTableName);
 
         setDependencies();
@@ -54,7 +53,7 @@ public class Book extends EntityBase {
                     + bookID + " found.");
         }
     }
-    
+
     public Book(Properties props) {
         super(myTableName);
 
@@ -70,21 +69,21 @@ public class Book extends EntityBase {
             }
         }
     }
-    
+
     /**
      * for creation of the GUI "BookView"
      */
-    public Book(){
+    public Book() {
         super(myTableName);
         Properties persistentState;
         persistentState = new Properties();
     }
-    
-     public void update() {
+
+    public void update() {
         updateStateInDatabase();
     }
-    
-      private void updateStateInDatabase() {
+
+    private void updateStateInDatabase() {
         try {
             if (persistentState.getProperty("bookID") != null) {
                 Properties whereClause = new Properties();
@@ -104,35 +103,32 @@ public class Book extends EntityBase {
         }
         //DEBUG System.out.println("updateStateInDatabase " + updateStatusMessage);
     }
-    
+
     private void setDependencies() {
         dependencies = new Properties();
         myRegistry.setDependencies(dependencies);
     }
-    
+
     public Object getState(String key) {
         if (key.equals("UpdateStatusMessage") == true) {
             return updateStatusMessage;
         }
         return persistentState.getProperty(key);
     }
-    
+
     public void stateChangeRequest(String key, Object value) {
 
         myRegistry.updateSubscribers(key, this);
     }
-    
+
     protected void initializeSchema(String tableName) {
         if (mySchema == null) {
             mySchema = getSchemaInfo(tableName);
         }
     }
-    
+
     public void updateState(String key, Object value) {
         stateChangeRequest(key, value);
     }
-     
-    
-    
-    
+
 }//END CLASS

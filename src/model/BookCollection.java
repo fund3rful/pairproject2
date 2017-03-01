@@ -21,7 +21,6 @@ public class BookCollection extends EntityBase {
         executeQuery(sql);
     }
 
-
     public void findBooksYoungerThan(String year) throws InvalidPrimaryKeyException {
             executeQuery("SELECT * FROM " + myTableName + " WHERE (pubYear > '" + year + "')");      
     }

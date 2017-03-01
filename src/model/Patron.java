@@ -69,6 +69,12 @@ public class Patron extends EntityBase {
             }
         }
     }
+    
+    public Patron(){
+        super(myTableName);
+        
+        persistentState = new Properties();
+    }
 
     private void setDependencies() {
         dependencies = new Properties();

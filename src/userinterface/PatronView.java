@@ -178,7 +178,7 @@ public class PatronView extends View {
     }
 
     /**
-     * sets the information given by the modal to the input boxes
+     * sets the information given by the model to the input boxes
      */
     public void populateFields() {
         

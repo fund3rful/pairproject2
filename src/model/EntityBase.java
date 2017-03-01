@@ -64,7 +64,7 @@ public abstract class EntityBase extends Persistable
     protected EntityBase(String tablename) {
         myStage = MainStageContainer.getInstance();
         myViews = new Hashtable<String, Scene>();
-
+        //System.out.println(tablename);//debug
         // save our table name for later
         myTableName = tablename;
 
