@@ -291,18 +291,6 @@ public class PatronView extends View {
             messageView.displayMessage("You must choose a Date of birth");
             return;
         }
-       
-        
-        //if (patronDOB.startsWith()) {
-        //    messageView.displayMessage("Patron is too old");
-        //    return;
-        //} else {
-        //}
-        
-        if (patronDOB.startsWith("2000  2017")) {
-            messageView.displayMessage("Patron must be 18 years or older");
-            return;
-        }
                 
         /*get all the information via GUI and populate a properties object*/
         prop.setProperty("name", name.getText());

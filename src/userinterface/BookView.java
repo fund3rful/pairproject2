@@ -203,6 +203,10 @@ public class BookView extends View {
                 //messageView.displayMessage("Submit button pressed");
                 Properties prop = new Properties();
                 
+                /*Make sure all fields are not null */
+                String authorName = author.getText();
+                
+                
                 /* get all the information from the GUI and populate the properties object */
                 prop.setProperty("author", author.getText());
                 prop.setProperty("title", title.getText());

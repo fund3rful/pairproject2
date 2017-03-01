@@ -44,7 +44,7 @@ public class PatronCollectionView extends View {
 
     }
     private TableView<PatronInsert> table = new TableView<PatronInsert>();
-    private final ObservableList<PatronInsert> data
+    private static final ObservableList<PatronInsert> data
             = FXCollections.observableArrayList();
 
     public void addData() {
@@ -99,7 +99,7 @@ public class PatronCollectionView extends View {
         dobNameCol.setMinWidth(100);
         dobNameCol.setCellValueFactory(
                 new PropertyValueFactory<PatronInsert, String>("dateOfBirth"));
-        
+       
         table.setItems(data);
         table.getColumns().addAll(nameCol, cityCol, stateCodeCol, zipCol, emailCol, dobNameCol);
         
