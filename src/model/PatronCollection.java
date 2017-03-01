@@ -4,6 +4,10 @@ import exception.InvalidPrimaryKeyException;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Vector;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import userinterface.MainStageContainer;
+import userinterface.PatronCollectionView;
 
 /**
  *
@@ -28,7 +32,7 @@ public class PatronCollection extends EntityBase {
     }
 
     public void findPatronsAtZipCode(String zip) throws InvalidPrimaryKeyException {
-        executeQuery("SELECT * FROM " + myTableName + " WHERE (zip = " + zip + ")");
+        executeQuery("SELECT * FROM " + myTableName + " WHERE (zip = " + zip + ") ORDER BY NAME");
     }
 
     public void findPatronsWithNameLike(String name) throws InvalidPrimaryKeyException {
@@ -74,6 +78,12 @@ public class PatronCollection extends EntityBase {
         if (mySchema == null) {
             mySchema = getSchemaInfo(tableName);
         }
+    }
+    public void createAndShowView(){
+        Stage stage = MainStageContainer.getInstance();
+        PatronCollectionView pcv = new PatronCollectionView(this);
+        Scene scene = new Scene(pcv);
+        stage.setScene(scene);
     }
     
 }

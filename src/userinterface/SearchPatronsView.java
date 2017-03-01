@@ -5,7 +5,10 @@
  */
 package userinterface;
 
+import exception.InvalidPrimaryKeyException;
 import impresario.IModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,6 +24,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.PatronCollection;
 
 /**
  *
@@ -80,9 +84,15 @@ VBox container = new VBox(10);
             @Override
             public void handle(ActionEvent e){
                 
-                String temp;
-                temp = patronTextField.getText();
-                int tempInt = Integer.parseInt(temp);
+                String temp = patronTextField.getText();
+                PatronCollection p = new PatronCollection();
+                try {
+                    p.findPatronsAtZipCode(temp);
+                } catch (InvalidPrimaryKeyException ex) {
+                    Logger.getLogger(SearchPatronsView.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                p.createAndShowView();
+                
             }
        
     });
