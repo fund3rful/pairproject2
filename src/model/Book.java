@@ -13,6 +13,7 @@ public class Book extends EntityBase {
     private static final String myTableName = "Book";
     protected Properties dependencies;
     private String updateStatusMessage = "";
+    private static Properties persistantState;
 
     public Book(int bookID)
             throws InvalidPrimaryKeyException {
@@ -75,8 +76,14 @@ public class Book extends EntityBase {
      */
     public Book() {
         super(myTableName);
-        Properties persistentState;
+        
         persistentState = new Properties();
+    }
+    
+    public void processNewBook(Properties b)
+    {
+        persistentState = b;
+        
     }
 
     public void update() {

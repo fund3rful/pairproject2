@@ -69,7 +69,7 @@ public abstract class EntityBase extends Persistable
         myTableName = tablename;
 
         // extract the schema from the database, calls methods in subclasses
-       // initializeSchema(myTableName);
+        initializeSchema(myTableName);
 
         // create a place to hold our state from the database
         persistentState = new Properties();

@@ -28,7 +28,9 @@ import java.util.Properties;
 // project imports
 import impresario.IModel;
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Locale;
 import javafx.scene.control.DatePicker;
 import model.*;
@@ -37,8 +39,7 @@ import model.*;
  * The class containing the Account View for the ATM application
  */
 //==============================================================
-public class PatronsView extends View {
-    private static IModel patron;
+public class PatronView extends View {
 
     // GUI components
     protected TextField patronId;
@@ -57,14 +58,11 @@ public class PatronsView extends View {
     // For showing error message
     protected MessageView statusLog;
 
-    public PatronsView(IModel model, String classname) {
-        super(model, classname);
-    }
 
     // constructor for this class -- takes a model object
     //----------------------------------------------------------
-    public PatronView(IModel patron) {
-        super(patron, "PatronView");
+    public PatronView(IModel model) {
+        super(model, "PatronView");
 
         // create a container for showing the contents
         VBox container = new VBox(10);
@@ -194,8 +192,8 @@ public class PatronsView extends View {
         dobLabel.setFont(myFont);
         dobLabel.setWrappingWidth(150);
         dobLabel.setTextAlignment(TextAlignment.RIGHT);
-        grid.add(dobLabel, 0, 8);
-
+        grid.add(dobLabel, 0, 8);      
+        
         DatePicker datePicker = new DatePicker();
         grid.add(datePicker, 1, 8);
         
@@ -212,21 +210,30 @@ public class PatronsView extends View {
             }
         
             });
-
+        
+        MessageView messageView = createStatusLog("");
+        messageView.setFont(myFont);
+        messageView.setWrappingWidth(150);
+        messageView.setTextAlignment(TextAlignment.RIGHT);
+        grid.add(messageView, 0, 20);
+        
         HBox doneCont = new HBox(10);
-        doneCont.setAlignment(Pos.CENTER);
+        doneCont.setAlignment(Pos.CENTER_RIGHT);
         cancelButton = new Button("Back");
         cancelButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent e) {
-                clearErrorMessage();
-                myModel.stateChangeRequest("AccountCancelled", null);
+                Librarian lib = new Librarian();
+                lib.start();
+                //messageView.displayMessage("Back Button Pressed");
             }
         });
         doneCont.getChildren().add(cancelButton);
         grid.add(doneCont, 1,10);
+        
+       
         
         HBox hbSubmit = new HBox(10);
         hbSubmit.setAlignment(Pos.CENTER_LEFT);
@@ -238,7 +245,66 @@ public class PatronsView extends View {
             public void handle(ActionEvent e) {
                 Properties prop = new Properties();
                 
-        /*get all the information via command line and populate a properties object*/
+        /* Make sure all fields are not null */
+        String patronName = name.getText();
+        if (patronName.isEmpty()){
+            messageView.displayMessage("You must input a Name");
+            name.requestFocus();
+            return;                  
+                    
+        }
+        
+        String patronAddress = address.getText();
+        if (patronAddress.isEmpty()) {
+            messageView.displayMessage("You must input a Address");
+            return;
+        }
+        
+        String patronCity = city.getText();
+        if (patronCity.isEmpty()) {
+            messageView.displayMessage("You must input a City");
+            return;
+        }
+        
+        String patronStateCode = state.getText();
+        if (patronStateCode.isEmpty()) {
+            messageView.displayMessage("You must input a State code");
+            return;
+        }
+        
+        String patronZip = zip.getText();
+        if (patronZip.isEmpty()) {
+            messageView.displayMessage("You must input a Zip code");
+            return;
+        }
+        
+        String patronEmail = email.getText();
+        if (patronEmail.isEmpty()) {
+            messageView.displayMessage("You must input a Email address");
+            return;
+        }
+        LocalDate ld = datePicker.getValue();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+        String dateOfBirth = ld.format(formatter);
+        String patronDOB = dateOfBirth;
+        if (patronDOB.isEmpty()) {
+            messageView.displayMessage("You must choose a Date of birth");
+            return;
+        }
+       
+        
+        //if (patronDOB.startsWith()) {
+        //    messageView.displayMessage("Patron is too old");
+        //    return;
+        //} else {
+        //}
+        
+        if (patronDOB.startsWith("2000  2017")) {
+            messageView.displayMessage("Patron must be 18 years or older");
+            return;
+        }
+                
+        /*get all the information via GUI and populate a properties object*/
         prop.setProperty("name", name.getText());
         prop.setProperty("address", address.getText());
         prop.setProperty("city", city.getText());
@@ -246,18 +312,23 @@ public class PatronsView extends View {
         prop.setProperty("stateCode", state.getText().toUpperCase());
         prop.setProperty("zip", zip.getText());
         prop.setProperty("email", email.getText());
-        LocalDate ld = datePicker.getValue();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd");
-        String dateOfBirth = ld.format(formatter);
         prop.setProperty("dateOfBirth", dateOfBirth);
+        
+        
+        
         /*use the information to create a new patron*/
+        Patron patron = (Patron) myModel;
+        patron.processNewPatron(prop);
+        patron.update();
+        messageView.displayMessage("Patron added successfully");
         
                 
             }
         });
         
         hbSubmit.getChildren().add(submitButton);
-        grid.add(hbSubmit,1,10);
+        grid.add(hbSubmit,0,10);
+       
 
         vbox.getChildren().add(grid);
         //vbox.getChildren().add(doneCont);

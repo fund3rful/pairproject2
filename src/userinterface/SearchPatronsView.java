@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -25,16 +26,31 @@ import javafx.stage.Stage;
  *
  * @author Andrew
  */
-public class SearchPatronView {
+public class SearchPatronsView extends View{
     
-    public SearchPatronView(){
+    public SearchPatronsView(IModel model){
+           super(model, "SearchPatronsView");
+           Librarian lib = (Librarian) model;
            
+           //create a container for showing the contents
+VBox container = new VBox(10);
+        container.setPadding(new Insets(15, 5, 5, 5));
+
         
-    }
+
+        // create our GUI components, add them to this Container
+        container.getChildren().add(createFormContent());
+
+
+        getChildren().add(container);
+
+   }
 
     
 
-    public Scene start(Stage stage) throws Exception {
+    public VBox createFormContent() {
+        VBox vbox = new VBox(10);
+        
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -70,8 +86,12 @@ public class SearchPatronView {
             }
        
     });
-       Scene scene = new Scene(grid, 400, 400);
-       return scene;
-    
+      vbox.getChildren().add(grid);
+      return vbox;
+    }
+
+    @Override
+    public void updateState(String key, Object value) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -15,6 +15,7 @@ public class Patron extends EntityBase {
     private String updateStatusMessage = "";
     protected Properties dependencies;
     private static final String myTableName = "Patron";
+    private static Properties persistantState;
 
     public Patron(int patronId) throws InvalidPrimaryKeyException {
         super(myTableName);
@@ -77,6 +78,7 @@ public class Patron extends EntityBase {
     }
     public void processNewPatron(Properties p)
     {
+        persistentState = p;
         
     }
 
