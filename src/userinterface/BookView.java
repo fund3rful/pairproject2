@@ -208,17 +208,17 @@ public class BookView extends View {
                 String bookStatus = (String)status.getValue();
                 
                 /*Make sure all fields are not null */ 
-                if (authorName.isEmpty()) {
+                if (authorName == null || authorName.isEmpty()) {
                     messageView.displayMessage("You must input an Author");
                     return;
                 }
                 
-                if (bookTitle.isEmpty()) {
+                if (bookTitle == null || bookTitle.isEmpty()) {
                     messageView.displayMessage("You must input a book Title");
                     return;
                 }
                 
-                if (publicationYear.isEmpty()) {
+                if (publicationYear == null || publicationYear.isEmpty()) {
                     messageView.displayMessage("You must input a Publication Year");
                     return;
                 }
