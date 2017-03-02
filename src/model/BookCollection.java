@@ -1,10 +1,12 @@
-
 package model;
 
 import exception.InvalidPrimaryKeyException;
 import java.util.Properties;
 import java.util.Vector;
-
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import userinterface.BookCollectionView;
+import userinterface.MainStageContainer;
 
 public class BookCollection extends EntityBase {
 
@@ -16,24 +18,24 @@ public class BookCollection extends EntityBase {
     }
 
     public void findBooksOlderThan(String year) throws InvalidPrimaryKeyException {
-        
+
         String sql = "SELECT * FROM " + myTableName + " WHERE (pubYear < '" + year + "')";
         executeQuery(sql);
     }
 
     public void findBooksYoungerThan(String year) throws InvalidPrimaryKeyException {
-            executeQuery("SELECT * FROM " + myTableName + " WHERE (pubYear > '" + year + "')");      
+        executeQuery("SELECT * FROM " + myTableName + " WHERE (pubYear > '" + year + "')");
     }
 
     public void findBooksWithTitleLike(String name) throws InvalidPrimaryKeyException {
-            executeQuery("SELECT * FROM " + myTableName + " WHERE (title like '" + name + "')");      
+        executeQuery("SELECT * FROM " + myTableName + " WHERE (title like '" + name + "') ORDER BY auhtor");
     }
 
     public void findBooksWithAuthorLike(String name) throws InvalidPrimaryKeyException {
-            executeQuery("SELECT * FROM " + myTableName + " WHERE (author like'" + name + "')");
+        executeQuery("SELECT * FROM " + myTableName + " WHERE (author like'" + name + "') ORDER BY author");
     }
 
-private void executeQuery(String query) throws InvalidPrimaryKeyException {
+    private void executeQuery(String query) throws InvalidPrimaryKeyException {
         Vector allDataRetrieved = getSelectQueryResult(query);
 
         if (allDataRetrieved != null) {
@@ -72,9 +74,16 @@ private void executeQuery(String query) throws InvalidPrimaryKeyException {
         if (mySchema == null) {
             mySchema = getSchemaInfo(tableName);
         }
+    }    
+       
+    /**
+     *creates BookCollectionView
+     */
+    public void createAndShowView() {
+        Stage stage = MainStageContainer.getInstance();
+        BookCollectionView bcv = new BookCollectionView(this);
+        Scene scene = new Scene(bcv);
+        stage.setScene(scene);
     }
-    
 
-
-    
 }//end class
