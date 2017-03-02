@@ -125,13 +125,13 @@ public class BookCollectionView extends View {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private class BookInsert {
+    public static class BookInsert {
 
-        SimpleStringProperty title;
-        SimpleStringProperty author;
-        SimpleStringProperty pubYear;
-        SimpleStringProperty status;
-        SimpleStringProperty bookId;
+        private final SimpleStringProperty title;
+        private final SimpleStringProperty author;
+        private final SimpleStringProperty pubYear;
+        private final SimpleStringProperty status;
+        private final SimpleStringProperty bookId;
 
         private BookInsert(String title, String author, String pubYear, String status, String bookId) {
 
