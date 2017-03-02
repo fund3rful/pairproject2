@@ -163,8 +163,6 @@ public class BookView extends View {
                 );
         status = new ComboBox(options);
        
-        //status = new TextField();
-       // status.setEditable(true);
         grid.add(status, 1, 5);
         
         MessageView messageView = createStatusLog("");
@@ -184,6 +182,7 @@ public class BookView extends View {
             public void handle(ActionEvent e) {
                 Librarian lib = new Librarian();
                 lib.start();
+                /* Debugging */
                  //messageView.displayMessage("Done button pressed");
             }
         });
@@ -200,23 +199,41 @@ public class BookView extends View {
 
             @Override
             public void handle(ActionEvent e) {
+                /* Debugging */
                 //messageView.displayMessage("Submit button pressed");
                 Properties prop = new Properties();
-                
-                /*Make sure all fields are not null */
                 String authorName = author.getText();
+                String bookTitle = title.getText();
+                String publicationYear = pubYear.getText();
+                String bookStatus = (String)status.getValue();
                 
+                /*Make sure all fields are not null */ 
+                if (authorName.isEmpty()) {
+                    messageView.displayMessage("You must input an Author");
+                    return;
+                }
+                
+                if (bookTitle.isEmpty()) {
+                    messageView.displayMessage("You must input a book Title");
+                    return;
+                }
+                
+                if (publicationYear.isEmpty()) {
+                    messageView.displayMessage("You must input a Publication Year");
+                    return;
+                }
                 
                 /* get all the information from the GUI and populate the properties object */
-                prop.setProperty("author", author.getText());
-                prop.setProperty("title", title.getText());
-                prop.setProperty("pubYear", pubYear.getText());
-                prop.setProperty("status", (String)status.getValue());
+                prop.setProperty("author", authorName);
+                prop.setProperty("title", bookTitle);
+                prop.setProperty("pubYear", publicationYear);
+                prop.setProperty("status", bookStatus);
                 
                 /* use this information to create new book */
                 Book book = (Book) myModel;
                 book.processNewBook(prop);
                 book.update();
+                messageView.displayMessage("Book added successfully");
                 
             }
         });
@@ -224,11 +241,7 @@ public class BookView extends View {
         hbSubmit.getChildren().add(submitButton);
         grid.add(hbSubmit,0,6);
         
-        
-        
         vbox.getChildren().add(grid);
-        //vbox.getChildren().add(doneCont);
-       // vbox.getChildren().add(hbSubmit);
 
         return vbox;
     }

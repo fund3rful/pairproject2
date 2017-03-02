@@ -58,7 +58,6 @@ public class PatronView extends View {
     // For showing error message
     protected MessageView statusLog;
 
-
     // constructor for this class -- takes a model object
     //----------------------------------------------------------
     public PatronView(IModel model) {
@@ -147,7 +146,7 @@ public class PatronView extends View {
         address = new TextField();
         address.setEditable(true);
         grid.add(address, 1, 3);
-        
+
         Text cityLabel = new Text(" City : ");
         cityLabel.setFont(myFont);
         cityLabel.setWrappingWidth(150);
@@ -157,7 +156,7 @@ public class PatronView extends View {
         city = new TextField();
         city.setEditable(true);
         grid.add(city, 1, 4);
-        
+
         Text stateLabel = new Text(" State Code : ");
         stateLabel.setFont(myFont);
         stateLabel.setWrappingWidth(150);
@@ -167,7 +166,7 @@ public class PatronView extends View {
         state = new TextField();
         state.setEditable(true);
         grid.add(state, 1, 5);
-        
+
         Text zipLabel = new Text(" Zip Code : ");
         zipLabel.setFont(myFont);
         zipLabel.setWrappingWidth(150);
@@ -177,7 +176,7 @@ public class PatronView extends View {
         zip = new TextField();
         zip.setEditable(true);
         grid.add(zip, 1, 6);
-        
+
         Text emailLabel = new Text(" Email Address : ");
         emailLabel.setFont(myFont);
         emailLabel.setWrappingWidth(150);
@@ -187,36 +186,35 @@ public class PatronView extends View {
         email = new TextField();
         email.setEditable(true);
         grid.add(email, 1, 7);
-        
+
         Text dobLabel = new Text(" Date Of Birth : ");
         dobLabel.setFont(myFont);
         dobLabel.setWrappingWidth(150);
         dobLabel.setTextAlignment(TextAlignment.RIGHT);
-        grid.add(dobLabel, 0, 8);      
-        
+        grid.add(dobLabel, 0, 8);
+
         DatePicker datePicker = new DatePicker();
         grid.add(datePicker, 1, 8);
-        
+
         datePicker.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
-            public void handle(ActionEvent e) 
-            {
-                //LocalDate dateOfBirth = datePicker.getValue();
+            public void handle(ActionEvent e) {
                 LocalDate ld = datePicker.getValue();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd");
                 String dateOfBirth = ld.format(formatter);
-                System.out.println(dateOfBirth);
+                /* Debugging */
+                //System.out.println(dateOfBirth);
             }
-        
-            });
-        
+
+        });
+
         MessageView messageView = createStatusLog("");
         messageView.setFont(myFont);
         messageView.setWrappingWidth(150);
         messageView.setTextAlignment(TextAlignment.RIGHT);
         grid.add(messageView, 0, 20);
-        
+
         HBox doneCont = new HBox(10);
         doneCont.setAlignment(Pos.CENTER_RIGHT);
         cancelButton = new Button("Back");
@@ -225,16 +223,16 @@ public class PatronView extends View {
 
             @Override
             public void handle(ActionEvent e) {
+                /* Debugging */
+                //messageView.displayMessage("Back Button Pressed");
                 Librarian lib = new Librarian();
                 lib.start();
-                //messageView.displayMessage("Back Button Pressed");
             }
         });
+
         doneCont.getChildren().add(cancelButton);
-        grid.add(doneCont, 1,10);
-        
-       
-        
+        grid.add(doneCont, 1, 10);
+
         HBox hbSubmit = new HBox(10);
         hbSubmit.setAlignment(Pos.CENTER_LEFT);
         submitButton = new Button("Submit");
@@ -244,82 +242,88 @@ public class PatronView extends View {
             @Override
             public void handle(ActionEvent e) {
                 Properties prop = new Properties();
+
+                /* Make sure all fields are not null */
+                String patronName = name.getText();
+                if (patronName.isEmpty()) {
+                    messageView.displayMessage("You must input a Name");
+                    return;
+                }
                 
-        /* Make sure all fields are not null */
-        String patronName = name.getText();
-        if (patronName.isEmpty()){
-            messageView.displayMessage("You must input a Name");
-            name.requestFocus();
-            return;                  
-                    
-        }
-        
-        String patronAddress = address.getText();
-        if (patronAddress.isEmpty()) {
-            messageView.displayMessage("You must input a Address");
-            return;
-        }
-        
-        String patronCity = city.getText();
-        if (patronCity.isEmpty()) {
-            messageView.displayMessage("You must input a City");
-            return;
-        }
-        
-        String patronStateCode = state.getText();
-        if (patronStateCode.isEmpty()) {
-            messageView.displayMessage("You must input a State code");
-            return;
-        }
-        
-        String patronZip = zip.getText();
-        if (patronZip.isEmpty()) {
-            messageView.displayMessage("You must input a Zip code");
-            return;
-        }
-        
-        String patronEmail = email.getText();
-        if (patronEmail.isEmpty()) {
-            messageView.displayMessage("You must input a Email address");
-            return;
-        }
-        LocalDate ld = datePicker.getValue();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd");
-        String dateOfBirth = ld.format(formatter);
-        String patronDOB = dateOfBirth;
-        if (patronDOB.isEmpty()) {
-            messageView.displayMessage("You must choose a Date of birth");
-            return;
-        }
+                String patronAddress = address.getText();
+                if (patronAddress.isEmpty()) {
+                    messageView.displayMessage("You must input a Address");
+                    return;
+                }
                 
-        /*get all the information via GUI and populate a properties object*/
-        prop.setProperty("name", name.getText());
-        prop.setProperty("address", address.getText());
-        prop.setProperty("city", city.getText());
-        /*make all inputs uppercase by default*/
-        prop.setProperty("stateCode", state.getText().toUpperCase());
-        prop.setProperty("zip", zip.getText());
-        prop.setProperty("email", email.getText());
-        prop.setProperty("dateOfBirth", dateOfBirth);
-        
-        
-        
-        /*use the information to create a new patron*/
-        Patron patron = (Patron) myModel;
-        patron.processNewPatron(prop);
-        patron.update();
-        messageView.displayMessage("Patron added successfully");
-        
+                String patronCity = city.getText();
+                if (patronCity.isEmpty()) {
+                    messageView.displayMessage("You must input a City");
+                    return;
+                }
                 
+                String patronStateCode = state.getText().toUpperCase();
+                if (patronStateCode.isEmpty()) {
+                    messageView.displayMessage("You must input a State code");
+                    return;
+                }
+                
+                String patronZip = zip.getText();
+                if (patronZip.isEmpty()) {
+                    messageView.displayMessage("You must input a Zip code");
+                    return;
+                }
+
+                String patronEmail = email.getText();
+                if (patronEmail.isEmpty()) {
+                    messageView.displayMessage("You must input a Email address");
+                    return;
+                }
+                
+                LocalDate ld = datePicker.getValue();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+                String dateOfBirth = ld.format(formatter);
+                String patronDOB = dateOfBirth;
+                if (patronDOB.isEmpty()) {
+                    messageView.displayMessage("You must choose a Date of birth");
+                    return;
+                }
+
+                int year = ld.getYear();
+                int yearUpperBound = 1999;
+                int yearLowerBound = 1917;
+                if (!(yearLowerBound < year)) {
+                    messageView.displayMessage("Patron is too old");
+                    return;
+                }
+
+                if (!(yearUpperBound > year)) {
+                    messageView.displayMessage("Patron must be 18 years or older");
+                    return;
+                }
+                /*get all the information via GUI and populate a properties object*/
+                prop.setProperty("name", patronName);
+                prop.setProperty("address", patronAddress);
+                prop.setProperty("city", patronCity);
+                /*make all inputs uppercase by default*/
+                prop.setProperty("stateCode", patronStateCode);
+                prop.setProperty("zip", patronZip);
+                prop.setProperty("email", patronEmail);
+                prop.setProperty("dateOfBirth", dateOfBirth);
+
+                /*use the information to create a new patron*/
+                Patron patron = (Patron) myModel;
+                patron.processNewPatron(prop);
+                patron.update();
+                messageView.displayMessage("Patron added successfully");
+
             }
         });
-        
+
         hbSubmit.getChildren().add(submitButton);
-        grid.add(hbSubmit,0,10);
-       
+        grid.add(hbSubmit, 0, 10);
 
         vbox.getChildren().add(grid);
-        //vbox.getChildren().add(doneCont);
 
         return vbox;
     }
@@ -336,12 +340,12 @@ public class PatronView extends View {
      * sets the information given by the model to the input boxes
      */
     public void populateFields() {
-        
+
         patronId.setText((String) myModel.getState("patronId"));
         name.setText((String) myModel.getState("name"));
         address.setText((String) myModel.getState("address"));
         city.setText((String) myModel.getState("city"));
-        
+
     }
 
     /**
