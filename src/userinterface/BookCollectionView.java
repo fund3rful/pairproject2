@@ -55,8 +55,8 @@ public class BookCollectionView extends View {
     public void addData() {
         Vector<Book> bookList = (Vector<Book>) b.getState("books");
         for (Book book : bookList) {
-            data.add(new BookInsert((String) book.getState("bookId"), (String) book.getState("title"),
-                    (String) book.getState("author"), (String) book.getState("pubYear"), (String) book.getState("status")));
+            data.add(new BookInsert((String) book.getState("title"),
+                    (String) book.getState("author"), (String) book.getState("pubYear"), (String) book.getState("status"),(String) book.getState("bookId")));
         }
     }
 
