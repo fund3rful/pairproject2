@@ -242,57 +242,51 @@ public class PatronView extends View {
             @Override
             public void handle(ActionEvent e) {
                 Properties prop = new Properties();
-
-                /* Make sure all fields are not null */
                 String patronName = name.getText();
+                String patronAddress = address.getText();
+                String patronCity = city.getText();
+                String patronStateCode = state.getText().toUpperCase();
+                String patronZip = zip.getText();
+                String patronEmail = email.getText();
+                LocalDate ld = datePicker.getValue(); 
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+                String dateOfBirth = ld.format(formatter);
+                String patronDOB = dateOfBirth;
+                
+                /* Make sure all fields are not null */
                 if (patronName == null || patronName.isEmpty()) {
                     messageView.displayMessage("You must input a Name");
                     return;
                 }
                 
-                String patronAddress = address.getText();
                 if (patronAddress == null || patronAddress.isEmpty()) {
                     messageView.displayMessage("You must input a Address");
                     return;
                 }
-                
-                String patronCity = city.getText();
+               
                 if (patronCity == null || patronCity.isEmpty()) {
                     messageView.displayMessage("You must input a City");
                     return;
                 }
                 
-                String patronStateCode = state.getText().toUpperCase();
                 if (patronStateCode == null || patronStateCode.isEmpty()) {
                     messageView.displayMessage("You must input a State code");
                     return;
                 }
-                
-                String patronZip = zip.getText();
+               
                 if (patronZip == null || patronZip.isEmpty()) {
                     messageView.displayMessage("You must input a Zip code");
                     return;
                 }
-
-                String patronEmail = email.getText();
+                
                 if (patronEmail == null || patronEmail.isEmpty()) {
                     messageView.displayMessage("You must input a Email address");
                     return;
                 }
                 
-                LocalDate ld = datePicker.getValue(); 
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd");
                 if (ld ==null) {
                     messageView.displayMessage("You must choose a date of birth");
                     return;
-                }
-                String dateOfBirth = ld.format(formatter);
-                String patronDOB = dateOfBirth;
-               
-                if (ld == null) {
-                    messageView.displayMessage("You must choose a Date of birth");
-                    return;
-                
                 }
 
                 int year = ld.getYear();
