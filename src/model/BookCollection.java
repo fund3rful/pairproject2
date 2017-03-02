@@ -28,7 +28,7 @@ public class BookCollection extends EntityBase {
     }
 
     public void findBooksWithTitleLike(String name) throws InvalidPrimaryKeyException {
-        executeQuery("SELECT * FROM " + myTableName + " WHERE (title like '" + name + "') ORDER BY auhtor");
+        executeQuery("SELECT * FROM " + myTableName + " WHERE (title like '" + name + "') ORDER BY AUTHOR");
     }
 
     public void findBooksWithAuthorLike(String name) throws InvalidPrimaryKeyException {

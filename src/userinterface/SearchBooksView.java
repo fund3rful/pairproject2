@@ -34,10 +34,12 @@ import model.BookCollection;
  * @author Andrew
  */
 public class SearchBooksView extends View {
+    static BookCollection bc;
     
     public SearchBooksView(IModel model){
         super(model, "SearchBooksView");
         
+        bc = (BookCollection) model;
         //create a container 
         VBox container = new VBox(10);
         container.setPadding(new Insets(15,5,5,5));
@@ -81,9 +83,10 @@ public class SearchBooksView extends View {
             
             @Override
             public void handle(ActionEvent e){
-                BookCollection bc = new BookCollection();
+                
+                String temp = bookTextField.getText();
                 try {
-                    bc.findBooksWithTitleLike(bookTextField.getText());
+                    bc.findBooksWithTitleLike(temp);
                 } catch (InvalidPrimaryKeyException ex) {
                     Logger.getLogger(SearchBooksView.class.getName()).log(Level.SEVERE, null, ex);
                     bookTextField.setText("No Books found!");
@@ -91,7 +94,7 @@ public class SearchBooksView extends View {
                 
                     
                 
-                bc.createAndShowView();
+               bc.createAndShowView();
                 
             }
        

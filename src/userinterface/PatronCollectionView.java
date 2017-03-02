@@ -71,7 +71,7 @@ public class PatronCollectionView extends View {
         label.setFont(new Font("Arial", 20));
 
         //create columns
-         TableColumn IDCol = new TableColumn("bookId");
+         TableColumn IDCol = new TableColumn("patronId");
         IDCol.setMinWidth(100);
         IDCol.setCellValueFactory(
             new PropertyValueFactory<PatronInsert, String>("patronId"));
