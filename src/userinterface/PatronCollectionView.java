@@ -56,12 +56,12 @@ public class PatronCollectionView extends View {
     public void addData() {
         Vector<Patron> patronList = (Vector<Patron>) p.getState("patrons");
         for (Patron person : patronList) {
-            data.add(new PatronInsert((String) person.getState("patronId"), (String) person.getState("name"), (String) person.getState("address"), (String) person.getState("city"), (String) person.getState("stateCode"), (String) person.getState("zip"),
-                    (String) person.getState("email"), (String) person.getState("dateOfBirth")));
+            data.add(new PatronInsert ((String) person.getState("name"), (String) person.getState("address"), (String) person.getState("city"), (String) person.getState("stateCode"), (String) person.getState("zip"),
+                    (String) person.getState("email"), (String) person.getState("dateOfBirth"), (String) person.getState("patronId") ));
         }
     }
 
-    public VBox createFormContent() {
+    public VBox createFormContent() { 
 
         //box
         VBox vbox = new VBox(10);

@@ -250,8 +250,7 @@ public class PatronView extends View {
                 String patronEmail = email.getText();
                 LocalDate ld = datePicker.getValue(); 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd");
-                String dateOfBirth = ld.format(formatter);
-                String patronDOB = dateOfBirth;
+                
                 
                 /* Make sure all fields are not null */
                 if (patronName == null || patronName.isEmpty()) {
@@ -288,7 +287,10 @@ public class PatronView extends View {
                     messageView.displayMessage("You must choose a date of birth");
                     return;
                 }
-
+                
+                String dateOfBirth = ld.format(formatter);
+                String patronDOB = dateOfBirth;
+                
                 int year = ld.getYear();
                 int yearUpperBound = 1999;
                 int yearLowerBound = 1917;
