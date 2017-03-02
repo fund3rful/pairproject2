@@ -82,7 +82,7 @@ public class PatronCollection extends EntityBase {
     public void createAndShowView(){
         Stage stage = MainStageContainer.getInstance();
         PatronCollectionView pcv = new PatronCollectionView(this);
-        Scene scene = new Scene(pcv,1000,1000);
+        Scene scene = new Scene(pcv);
         stage.setScene(scene);
     }
     

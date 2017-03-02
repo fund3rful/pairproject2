@@ -25,15 +25,19 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.Book;
 import model.BookCollection;
+import model.Patron;
 
 /**
  *
  * @author Andrew
  */
 public class SearchBooksView extends View {
+    
+    protected MessageView statusLog;
 
     public SearchBooksView(IModel model) {
         super(model, "SearchBooksView");
@@ -51,12 +55,19 @@ public class SearchBooksView extends View {
 
     public VBox createFormContent() {
         VBox vbox = new VBox(10);
-
+        //grid
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
+        
+        //messageView
+         //MessageField
+        MessageView messageView = createStatusLog("");
+        messageView.setWrappingWidth(150);
+        messageView.setTextAlignment(TextAlignment.LEFT);
+        grid.add(messageView, 0, 2);
 
         //title
         Text scenetitle = new Text("Search Books By Title");
@@ -81,13 +92,21 @@ public class SearchBooksView extends View {
             public void handle(ActionEvent e) {
                 BookCollection b = new BookCollection();
                 String temp = bookTextField.getText();
+                if(temp == null || temp.isEmpty()){
+                    messageView.displayMessage("You must enter a book title");
+                    return;
+                }
                 try {
                     b.findBooksWithTitleLike(temp);
                 } catch (InvalidPrimaryKeyException ex) {
-                    Logger.getLogger(SearchBooksView.class.getName()).log(Level.SEVERE, null, ex);
-                    bookTextField.setText("No Books found!");
+                    // debug: Logger.getLogger(SearchBooksView.class.getName()).log(Level.SEVERE, null, ex);
+                    messageView.displayMessage("No books with Title: "+temp+" found");
                 }
-
+                Vector<Book> bookList = (Vector<Book>) b.getState("books");
+                 if(bookList.isEmpty()){
+                     messageView.displayMessage("No books with Title: "+temp+" found");
+                     return;
+                 }
                 b.createAndShowView();
 
             }
@@ -102,4 +121,15 @@ public class SearchBooksView extends View {
     public void updateState(String key, Object value) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    protected MessageView createStatusLog(String initialMessage) {
+        statusLog = new MessageView(initialMessage);
+
+        return statusLog;
+    
+    }
+    public void displayMessage(String message) {
+        statusLog.displayMessage(message);
+    }
+    
 }

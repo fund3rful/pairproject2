@@ -78,7 +78,7 @@ public class PatronCollectionView extends View {
         label.setFont(new Font("Arial", 20));
 
         //create columns
-         TableColumn IDCol = new TableColumn("patronId");
+        TableColumn IDCol = new TableColumn("patronId");
         IDCol.setMinWidth(100);
         IDCol.setCellValueFactory(
             new PropertyValueFactory<PatronInsert, String>("patronId"));
@@ -114,7 +114,7 @@ public class PatronCollectionView extends View {
                 new PropertyValueFactory<PatronInsert, String>("email"));
 
         TableColumn dobNameCol = new TableColumn("Date of Birth");
-        dobNameCol.setMinWidth(100);
+        dobNameCol.setMinWidth(150);
         dobNameCol.setCellValueFactory(
                 new PropertyValueFactory<PatronInsert, String>("dateOfBirth"));
         
@@ -134,16 +134,16 @@ public class PatronCollectionView extends View {
                 
             }
         });
-        grid.add(doneCont,0,1);
 
         table.setItems(data);
         table.getColumns().addAll(IDCol, nameCol, cityCol, stateCodeCol, zipCol, emailCol, dobNameCol);
         grid.add(table, 0, 0);
-        
+        doneCont.getChildren().add(cancelButton);
+        grid.add(doneCont, 0, 5);
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
 
-        vbox.getChildren().addAll(label, table, doneCont);
+        vbox.getChildren().addAll(grid);
 
         return vbox;
     }
