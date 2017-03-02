@@ -303,11 +303,11 @@ public class PatronView extends View {
                     messageView.displayMessage("Patron must be 18 years or older");
                     return;
                 }
+                
                 /*get all the information via GUI and populate a properties object*/
                 prop.setProperty("name", patronName);
                 prop.setProperty("address", patronAddress);
                 prop.setProperty("city", patronCity);
-                /*make all inputs uppercase by default*/
                 prop.setProperty("stateCode", patronStateCode);
                 prop.setProperty("zip", patronZip);
                 prop.setProperty("email", patronEmail);
