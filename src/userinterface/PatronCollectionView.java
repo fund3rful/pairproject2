@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -65,6 +66,12 @@ public class PatronCollectionView extends View {
 
         //box
         VBox vbox = new VBox(10);
+        
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25,25,25,25));
 
         //Label
         final Label label = new Label("Patrons");
@@ -127,11 +134,12 @@ public class PatronCollectionView extends View {
                 
             }
         });
-        
+        grid.add(doneCont,0,1);
 
         table.setItems(data);
         table.getColumns().addAll(IDCol, nameCol, cityCol, stateCodeCol, zipCol, emailCol, dobNameCol);
-
+        grid.add(table, 0, 0);
+        
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
 
