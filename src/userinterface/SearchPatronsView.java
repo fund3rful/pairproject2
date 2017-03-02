@@ -90,6 +90,7 @@ VBox container = new VBox(10);
                     p.findPatronsAtZipCode(temp);
                 } catch (InvalidPrimaryKeyException ex) {
                     Logger.getLogger(SearchPatronsView.class.getName()).log(Level.SEVERE, null, ex);
+                    patronTextField.setText("No Patrons Found!");
                 }
                 p.createAndShowView();
                 

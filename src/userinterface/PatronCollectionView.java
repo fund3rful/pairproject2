@@ -10,7 +10,11 @@ import java.util.Vector;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -18,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import model.Patron;
 import model.PatronCollection;
 
@@ -51,7 +56,7 @@ public class PatronCollectionView extends View {
     public void addData() {
         Vector<Patron> patronList = (Vector<Patron>) p.getState("patrons");
         for (Patron person : patronList) {
-            data.add(new PatronInsert((String) person.getState("name"), (String) person.getState("address"), (String) person.getState("city"), (String) person.getState("stateCode"), (String) person.getState("zip"),
+            data.add(new PatronInsert((String) person.getState("patronId"), (String) person.getState("name"), (String) person.getState("address"), (String) person.getState("city"), (String) person.getState("stateCode"), (String) person.getState("zip"),
                     (String) person.getState("email"), (String) person.getState("dateOfBirth")));
         }
     }
@@ -66,6 +71,11 @@ public class PatronCollectionView extends View {
         label.setFont(new Font("Arial", 20));
 
         //create columns
+         TableColumn IDCol = new TableColumn("bookId");
+        IDCol.setMinWidth(100);
+        IDCol.setCellValueFactory(
+            new PropertyValueFactory<PatronInsert, String>("patronId"));
+        
         TableColumn nameCol = new TableColumn("Name");
         nameCol.setMinWidth(100);
         nameCol.setCellValueFactory(
@@ -100,14 +110,32 @@ public class PatronCollectionView extends View {
         dobNameCol.setMinWidth(100);
         dobNameCol.setCellValueFactory(
                 new PropertyValueFactory<PatronInsert, String>("dateOfBirth"));
+        
+        HBox doneCont = new HBox(10);
+        doneCont.setAlignment(Pos.CENTER_RIGHT);
+        Button cancelButton = new Button("Done");
+        cancelButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e) {
+                
+                
+                Librarian lib = new Librarian();
+                lib.start();
+                
+                
+            }
+        });
+        
 
         table.setItems(data);
-        table.getColumns().addAll(nameCol, cityCol, stateCodeCol, zipCol, emailCol, dobNameCol);
+        table.getColumns().addAll(IDCol, nameCol, cityCol, stateCodeCol, zipCol, emailCol, dobNameCol);
 
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
 
-        vbox.getChildren().addAll(label, table);
+        vbox.getChildren().addAll(label, table, doneCont);
 
         return vbox;
     }
@@ -126,16 +154,18 @@ public class PatronCollectionView extends View {
         private final SimpleStringProperty zip;
         private final SimpleStringProperty email;
         private final SimpleStringProperty dateOfBirth;
+        private final SimpleStringProperty patronId;
 
         private PatronInsert(String name, String address, String city, String stateCode,
-                String zip, String email, String dateOfBirth) {
+                String zip, String email, String dateOfBirth, String patronId) {
             this.address = new SimpleStringProperty(address);
-            this.city = new SimpleStringProperty(city);
             this.name = new SimpleStringProperty(name);
             this.stateCode = new SimpleStringProperty(stateCode);
             this.zip = new SimpleStringProperty(zip);
             this.email = new SimpleStringProperty(email);
             this.dateOfBirth = new SimpleStringProperty(dateOfBirth);
+            this.patronId = new SimpleStringProperty(patronId);
+            this.city = new SimpleStringProperty(city);
         }
 
         public String getName() {
